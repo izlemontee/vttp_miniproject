@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
+        <label for="numberOfPokemon">Enter Number Of Pokemon:</label>
+        <div>
+        <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
+        </div>
+        <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}"> 
+        </div>
+        <button type="submit">GO</button>
+    </form>
+</body>
+</html>

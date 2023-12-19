@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Pokemon team:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Pokemon</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pokemonName:${pokemonListBuilder}">
+                <td th:text="${pokemonName}"></td>
+                <td><form method="POST" th:action="@{/pokemon/remove}">
+                    <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
+                </form></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <span>
+            <form method="POST" th:action="@{/pokemon/clearall}">
+                <button type="submit">Clear All</button>
+            </form>
+        </span>
+        <span>
+            <form method="POST" th:action="@{/pokemon/displayall}">
+                <button type="submit" name="pokemondisplay" th:value="${pokemonListBuilder}">GO!!</button>
+            </form>
+        </span>
+    </div>
+</body>
+</html>

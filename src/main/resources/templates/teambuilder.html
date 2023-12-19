@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>Enter a Pokemon name</div>
+    <div>For regional forms, add a hyphen and the form at the end</div>
+    <div>E.g "Vulpix-Alola (no spaces)"</div>
+    <br>
+    
+    <div th:if="${pokemonAPIerror}">
+        The Pokemon you entered does not exist. Try again.
+    </div>
+    <br>
+    <div>
+        You need <span th:text="${remainingSize}"></span> more Pokemon
+    </div>
+    <form method="POST" th:action="@{/pokemon/teambuilder}" th:object="${pokemonInForm}">
+            <div>
+                <input type="text" name="fullName" th:field="*{fullName}">
+            </div>
+            <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
+               
+            </div>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <div th:if="${pokemonListBuilder.size() == 0}">Team currently empty</div>
+    <div th:unless="${pokemonListBuilder.size() == 0}">
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>Pokemon</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pokemonName:${pokemonListBuilder}">
+                    <td th:text="${pokemonName}"></td>
+                    <td><form method="POST" th:action="@{/pokemon/remove}">
+                        <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
+                    </form></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

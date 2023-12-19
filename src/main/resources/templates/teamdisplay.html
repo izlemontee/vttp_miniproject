@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Your team</h2>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pokemon</th>
+                    <th>Type 1</th>
+                    <th>Type 2</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pokemon:${pokemonTeam}">
+                    <td th:text="${pokemon.fullName}"></td>
+                    <td th:text="${pokemon.type1}"></td>
+                    <td th:text="${pokemon.type2}"></td>
+                    <td><img th:src="@{${pokemon.spriteUrl}}" alt=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Fire</td>
+                    <td>Water</td>
+                    <td>Grass</td>
+                    <td>Electric</td>
+                    <td>Normal</td>
+                    <td>Flying</td>
+                    <td>Rock</td>
+                    <td>Steel</td>
+                    <td>Bug</td>
+                    <td>Poison</td>
+                    <td>Psychic</td>
+                    <td>Ghost</td>
+                    <td>Fighting</td>
+                    <td>Dark</td>
+                    <td>Dragon</td>
+                    <td>Fairy</td>
+                    <td>Ground</td>
+                    <td>Ice</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:each="type:${typeList}"><span th:text="${type}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a th:href="@{/pokemon/goback}">Back to team builder</a>
+    </div>
+</body>
+</html>
