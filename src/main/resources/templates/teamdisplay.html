@@ -58,6 +58,13 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${keyExists}">The team name is already taken.</div>
+    <form method="POST" th:action="@{/pokemon/saveteam}" th:object="${saveTeam}">
+        Save your team:
+        <div th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}"></div>
+        <input type="text" name="teamname" th:field="*{teamName}">
+        <button type="submit">Save</button>
+    </form>
     <div>
         <a th:href="@{/pokemon/goback}">Back to team builder</a>
     </div>

@@ -23,6 +23,10 @@ public class PokemonType {
 
     private String TYPE;
 
+    public PokemonType(){
+
+    }
+
     public String getTYPE() {
         return TYPE;
     }
@@ -183,9 +187,15 @@ public class PokemonType {
             getICE()
 
         };
-
         return typings;
     }
+    public String[] getTypingString(){
+        String[] typings = {"fire","water","grass","electric","normal","flying","rock","steel","bug"
+        ,"poison","psychic","ghost","fighting","dark","dragon","fairy","ground","ice"};
+
+        return typings;
+        }
+    
 
     
 }
