@@ -3,30 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css"> 
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        table, th,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        } 
+    </style>
+    <title>All Teams</title>
 </head>
-<body>
-    <h2>Teams</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Team Name</th>
-                <th>Pokemon</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="teampreview:${allTeams}">
-                <td>
-                    <a th:href="@{/pokemon/teamdisplay/{id}(id=${teampreview.name})}">
-                        <span th:text="${teampreview.name}"></span>
-                    </a>
-                </td>
-                <td th:text="${teampreview.team}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
-        <a th:href="@{/pokemon/goback}">Back to team builder</a>
+<body class="w3-pale-blue">
+    <div class="w3-container w3-content w3-padding-64">
+        <div>
+            <h2>Teams</h2>
+        </div>
+        <div class="w3-ul w3-border w3-light-grey w3-text-grey shadow-container">
+            <br>
+            <div class="custom-table w3-white w3-card">
+                <div th:if="${allTeams.size() == 0}">
+                    <p>There are no teams.</p>
+                </div>
+                <div th:unless="${allTeams.size() == 0}">
+                <table>
+                    <thead class="w3-padding">
+                        <tr class="w3-padding">
+                            <th class="w3-padding">Team Name</th>
+                            <th class=" w3-margin-right teammembers" >Pokemon</th>
+                        </tr>
+                    </thead>
+                    <tbody class="w3-padding">
+                        <tr th:each="teampreview:${allTeams}" class="w3-padding">
+                            <td class="w3-padding">
+                                <a th:href="@{/pokemon/teamdisplay/{id}(id=${teampreview.name})}">
+                                    <span th:text="${teampreview.name}"></span>
+                                </a>
+                            </td>
+                            <td th:text="${teampreview.team}" class="w3-margin-right teammembers"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div>
+                <div class="button button-placement">
+                    <a th:href="@{/pokemon/goback}">Back to team builder</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

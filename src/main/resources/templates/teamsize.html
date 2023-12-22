@@ -1,19 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        h1{
+            text-align: center;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Initialise Your Team</title>
 </head>
-<body>
-    <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
-        <label for="numberOfPokemon">Enter Number Of Pokemon:</label>
+<body class="w3-pale-blue">
+    <div >
+        <h1>Pokemon Team Builder</h1>
         <div>
-        <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
+        <div class="w3-card we-left-align form w3-light-grey">
+            <div>
+            <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
+                <label for="numberOfPokemon" class="formintrotext">Enter Number Of Pokemon:</label>
+                <div class="teamsize">
+                <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
+                </div>
+                <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}"> 
+                </div>
+                <div class="form-button teamsize">
+                    <button type="submit">GO</button>
+                </div>
+            </form>
+            <div class="form-child-custom">
+                <div class="button button-placement">
+                    <a th:href="@{/pokemon/allteams}">View all teams</a>
+                </div>
+            </div>
+            </div>
+         
+            <br>
+
+
         </div>
-        <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}"> 
-        </div>
-        <button type="submit">GO</button>
-    </form>
+    </div>
+    </div>
 </body>
 </html>

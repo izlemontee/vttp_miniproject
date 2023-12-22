@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+    </style>
+    <title>Finalise Your Team</title>
 </head>
-<body>
-    <h2>Pokemon team:</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Pokemon</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="pokemonName:${pokemonListBuilder}">
-                <td th:text="${pokemonName}"></td>
-                <td><form method="POST" th:action="@{/pokemon/remove}">
-                    <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
-                </form></td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
-        <span>
-            <form method="POST" th:action="@{/pokemon/clearall}">
-                <button type="submit">Clear All</button>
-            </form>
-        </span>
-        <span>
-            <form method="POST" th:action="@{/pokemon/displayall}">
-                <button type="submit" name="pokemondisplay" th:value="${pokemonListBuilder}">GO!!</button>
-            </form>
-        </span>
+<body class="w3-pale-blue">
+    <div class="overall-container w3-light-grey">
+        <div class="custom-table w3-white w3-card">
+        <h2 class="formtext">Pokemon team:</h2>
+        <table class="fullteam w3-white w3-card">
+            <thead>
+                <tr>
+                    <th class="formtext">Pokemon</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pokemonName:${pokemonListBuilder}">
+                    <td th:text="${pokemonName}"></td>
+                    <td><form method="POST" th:action="@{/pokemon/remove}">
+                        <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
+                    </form></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttoncontainer">
+            <div class="buttonhalf">
+                <form method="POST" th:action="@{/pokemon/clearall}">
+                    <button class="button" type="submit">Clear All</button>
+                </form>
+            </div>
+                <div class="buttonhalf">
+                <form method="POST" th:action="@{/pokemon/displayall}">
+                    <button class="button" type="submit" name="pokemondisplay" th:value="${pokemonListBuilder}">GO!!</button>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 </html>

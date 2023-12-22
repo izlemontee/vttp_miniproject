@@ -3,66 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Team display</h2>
-    <div th:text="${name}"></div>
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Pokemon</th>
-                    <th>Type 1</th>
-                    <th>Type 2</th>
-                    <th>Image</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="pokemon:${pokemonlist}">
-                    <td th:text="${pokemon.fullName}"></td>
-                    <td th:text="${pokemon.type1}"></td>
-                    <td th:text="${pokemon.type2}"></td>
-                    <td><img th:src="@{${pokemon.spriteUrl}}" alt=""></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/typestyle.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        table, th,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        } 
+        /* div{
+            border: 1px solid black;
+        } */
+        th,td{
+            margin:auto;
+        }
 
-    <div>
+    </style>
+    <title>Team Display</title>
+</head>
+<body class="w3-pale-blue">
+    <div class="w3-container w3-center w3-light-grey overall-container">
+        <h2>Team display</h2>
+        <div th:text="${name}" class="teamname"></div>
         <div>
-            <table>
+            <table class="fullteam w3-white w3-card">
                 <thead>
                     <tr>
-                        <td>Fire</td>
-                        <td>Water</td>
-                        <td>Grass</td>
-                        <td>Electric</td>
-                        <td>Normal</td>
-                        <td>Flying</td>
-                        <td>Rock</td>
-                        <td>Steel</td>
-                        <td>Bug</td>
-                        <td>Poison</td>
-                        <td>Psychic</td>
-                        <td>Ghost</td>
-                        <td>Fighting</td>
-                        <td>Dark</td>
-                        <td>Dragon</td>
-                        <td>Fairy</td>
-                        <td>Ground</td>
-                        <td>Ice</td>
+                        <th>Pokemon</th>
+                        <th class="typedisplay">Type 1</th>
+                        <th class="typedisplay">Type 2</th>
+                        <th>Image</th>
+                        <th>Type Effectiveness</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td th:each="type:${typeList.getTypings()}"><span th:text="${type}"></span></td>
+                    <tr th:each="pokemon:${pokemonlist}">
+                        <td th:text="${pokemon.fullName}"></td>
+                        <td th:text="${pokemon.type1}" class="typedisplay"></td>
+                        <td th:text="${pokemon.type2}" class="typedisplay"></td>
+                        <td><img th:src="@{${pokemon.spriteUrl}}" alt=""></td>
+                        <td>
+                            <table class="typetable">
+                                <thead>
+                                    <tr>
+                                        <th class="fire">Fire</th>
+                                        <th class="water">Water</th>
+                                        <th class="grass">Grass</th>
+                                        <th class="electric">Electric</th>
+                                        <th class="normal">Normal</th>
+                                        <th class="flying">Flying</th>
+                                        <th class="rock">Rock</th>
+                                        <th class="steel">Steel</th>
+                                        <th class="bug">Bug</th>
+                                        <th class="poison">Poison</th>
+                                        <th class="psychic">Psychic</th>
+                                        <th class="ghost">Ghost</th>
+                                        <th class="fighting">Fighting</th>
+                                        <th class="dark">Dark</th>
+                                        <th class="dragon">Dragon</th>
+                                        <th class="fairy">Fairy</th>
+                                        <th class="ground">Ground</th>
+                                        <th class="ice">Ice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td th:each="typefloat:${pokemon.individualPokemonTypeTotal}" th:text="${typefloat}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-    </div>
-    <div>
-        <a th:href="@{/pokemon/goback}">Back to team builder</a>
+        </div>
+
+        <div>
+            <h2>Total Team Type Effectiveness</h2>
+        </div>
+        <div>
+            <div>
+                <table class="fullteam w3-white w3-card">
+                    <thead>
+                        <tr>
+                            <th class="fire">Fire</th>
+                            <th class="water">Water</th>
+                            <th class="grass">Grass</th>
+                            <th class="electric">Electric</th>
+                            <th class="normal">Normal</th>
+                            <th class="flying">Flying</th>
+                            <th class="rock">Rock</th>
+                            <th class="steel">Steel</th>
+                            <th class="bug">Bug</th>
+                            <th class="poison">Poison</th>
+                            <th class="psychic">Psychic</th>
+                            <th class="ghost">Ghost</th>
+                            <th class="fighting">Fighting</th>
+                            <th class="dark">Dark</th>
+                            <th class="dragon">Dragon</th>
+                            <th class="fairy">Fairy</th>
+                            <th class="ground">Ground</th>
+                            <th class="ice">Ice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:each="type:${typeList.getTypings()}"><span th:text="${type}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+        <div class="button w3-panel">
+            <a th:href="@{/pokemon/goback}">Back to team builder</a>
+        </div>
     </div>
 </body>
 </html>

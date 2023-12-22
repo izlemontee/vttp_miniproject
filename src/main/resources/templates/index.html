@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+    </style>
     <title>Document</title>
 </head>
-<body>
-    <h1>Welcome to the Pokemon rice fields</h1>
-    <div>
-        <a th:href="@{/pokemon/teamsize}">Pokemon Team Builder</a>
+<body class="w3-pale-blue">
+    <div class="w3-container w3-content w3-padding-64">
+        <h1>Welcome to the Pokemon rice fields</h1>
+        <div class="button button-placement">
+            <a th:href="@{/pokemon/teamsize}">Pokemon Team Builder</a>
+        </div>
     </div>
 </body>
 </html>

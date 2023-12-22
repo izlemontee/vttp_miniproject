@@ -3,50 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        h1{
+            margin-left: 10px;
+        }
+    </style>
+    <title>Team Builder</title>
 </head>
-<body>
-    <div>Enter a Pokemon name</div>
-    <div>For regional forms, add a hyphen and the form at the end</div>
-    <div>E.g "Vulpix-Alola (no spaces)"</div>
-    <br>
-    
-    <div th:if="${pokemonAPIerror}">
-        The Pokemon you entered does not exist. Try again.
-    </div>
-    <br>
-    <div>
-        You need <span th:text="${remainingSize}"></span> more Pokemon
-    </div>
-    <form method="POST" th:action="@{/pokemon/teambuilder}" th:object="${pokemonInForm}">
-            <div>
-                <input type="text" name="fullName" th:field="*{fullName}">
+<body class="w3-pale-blue">
+    <div class="overall-container w3-light-grey">
+        <h1>Team Builder</h1>
+        <div class="text">
+            <div>Enter a Pokemon name</div>
+            <div>For regional forms, add a hyphen and the form at the end</div>
+            <div>E.g "Vulpix-Alola (no spaces)"</div>
+        </div>
+        <br>
+        <div class="teambuilderform">
+            <div class="w3-white forty">
+                <div th:if="${pokemonAPIerror}">
+                    The Pokemon you entered does not exist. Try again.
+                </div>
+                <br>
+                <div class="teambuilderinternal formtext">
+                    You need <span th:text="${remainingSize}"> </span> more Pokemon
+                </div>
+                <form method="POST" th:action="@{/pokemon/teambuilder}" th:object="${pokemonInForm}" class="teambuilderinternal">
+                        <div>
+                            <input type="text" name="fullName" th:field="*{fullName}">
+                        </div>
+                        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
+                        
+                        </div>
+                    <div class="form-button">
+                    <button type="submit">Submit</button>
+                    </div>
+                </form>
             </div>
-            <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
-               
+            <div class="w3-white sixty">
+                <div th:if="${pokemonListBuilder.size() == 0}" class="formtext">Team currently empty</div>
+                <div th:unless="${pokemonListBuilder.size() == 0}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="formtext">Pokemon</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pokemonName:${pokemonListBuilder}">
+                                <td th:text="${pokemonName}"></td>
+                                <td><form method="POST" th:action="@{/pokemon/remove}">
+                                    <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
+                                </form></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        <button type="submit">Submit</button>
-    </form>
-    <br>
-    <div th:if="${pokemonListBuilder.size() == 0}">Team currently empty</div>
-    <div th:unless="${pokemonListBuilder.size() == 0}">
-        <table>
-            <thead>
-                <tr>
-                    
-                    <th>Pokemon</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="pokemonName:${pokemonListBuilder}">
-                    <td th:text="${pokemonName}"></td>
-                    <td><form method="POST" th:action="@{/pokemon/remove}">
-                        <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
-                    </form></td>
-                </tr>
-            </tbody>
-        </table>
+        </div>
+        <br>
+        <div class="button w3-panel button-placement" >
+            <a th:href="@{/pokemon/allteams}">View all teams</a>
+        </div>
     </div>
 
 </body>

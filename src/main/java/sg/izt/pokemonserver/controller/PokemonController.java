@@ -190,6 +190,8 @@ public class PokemonController {
         // typeList is the final team calculation, also a list
         session.setAttribute("pokemonTeam", pokemonList);
         session.setAttribute("typeList", typeList);
+        PokemonType pt = new PokemonType();
+        model.addAttribute("typeString",pt.getTypingString());
 
         model.addAttribute("pokemonTeam", pokemonList);
         model.addAttribute("typeList", typeList);
@@ -203,18 +205,19 @@ public class PokemonController {
     public String saveCustomTeam(@Valid @ModelAttribute("saveTeam") saveTeam team, 
     BindingResult result,
     HttpSession session, Model model){
+        PokemonType pt = new PokemonType();
         List<Pokemon> pokemonList = (List<Pokemon>)session.getAttribute("pokemonTeam");
         List<Float> typeList = (List<Float>)session.getAttribute("typeList");
         if(result.hasErrors()){
             System.out.println("form has errors");
-
+            model.addAttribute("typeString",pt.getTypingString());
             model.addAttribute("pokemonTeam", pokemonList);
             model.addAttribute("typeList", typeList);
             return "teamdisplay";
         }
 
         if(pokemonSvc.keyExists(team.getTeamName())){
-
+            model.addAttribute("typeString",pt.getTypingString());
             model.addAttribute("pokemonTeam", pokemonList);
             model.addAttribute("typeList", typeList);
             model.addAttribute("keyExists",true);
@@ -227,9 +230,16 @@ public class PokemonController {
         pokemonSvc.convertTeamToJson(team, pokemonList, typeList);
 
         // get all the teams to display in the next page
+
+        session.invalidate();
+        return "redirect:/pokemon/allteams";
+    }
+
+    @GetMapping(path = "/allteams")
+    public String showAllTeams(Model model){
+
         List<teamPreview> teamPreviewList = pokemonSvc.displayTeams();
         model.addAttribute("allTeams", teamPreviewList);
-        session.invalidate();
         return "allteams";
     }
 
@@ -239,8 +249,12 @@ public class PokemonController {
         
         String teamName = teamAsMap.get("name").toString();
         List<Pokemon> pokemonList = (List<Pokemon>)teamAsMap.get("pokemon");
+        for(Pokemon p:pokemonList){
+            pokemonSvc.setPokemonTypeEffectiveness(p);
+        }
         PokemonType type = (PokemonType)teamAsMap.get("types");
 
+        System.out.println("all's good for pokemon");
         model.addAttribute("name",teamName);
         model.addAttribute("pokemonlist", pokemonList);
         model.addAttribute("typeList", type);

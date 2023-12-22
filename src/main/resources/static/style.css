@@ -1,0 +1,220 @@
+.container {
+    width: 80%;
+    height: 700px;
+    margin: 0 auto;
+    border: 10px solid var(--clr-dark);
+    color: red;
+  }
+  
+  .item {
+    width: 150px;
+    height: 150px;
+    background-color: #fb7185;
+    padding: 1em;
+    font-weight: 700;
+    color: var(--clr-light);
+    text-align: center;
+    border: 10px solid var(--clr-accent);
+    border-radius: 10px;
+  }
+
+.init-container{
+    width: 80%;
+    height: 100px;
+    margin: 0 auto;
+    border: 10px solid var(--clr-dark);
+    color: black;
+    text-align: center;
+    /* box-shadow: 10px 10px 8px 10px #888888; */
+    box-shadow: 5px 5px 5px 5px #888888;
+}
+
+.shadow-container{
+    box-shadow: 5px 5px 5px 5px #888888;
+}
+
+.overall-container{
+    width:95%;
+    height:95%;
+    margin: 0 auto;
+    margin-top: 10%;
+    box-shadow: 5px 5px 5px 5px #888888;
+}
+
+.button-placement{
+    margin-top: 20px;
+    margin-left:10px;
+    margin-bottom: 5px;
+}
+
+.form-button{
+    margin-top: 1%;
+}
+
+.text{
+    margin-left: 10px;
+    margin-top: 5px;
+    background-color: grey; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    border-radius: 10px;
+
+}
+
+.form{
+    display: flex;
+    border: none;
+    padding: 10px;
+    border-radius:5px;
+    width:70%;
+    margin:auto;
+}
+.noborder{
+    border:none;
+}
+
+.form-child-custom{
+    flex: 2;
+}
+.list{
+    display:flex;
+    width:90%;
+    background-color: antiquewhite;
+    box-shadow: 5px 5px 5px 5px #888888;
+    border-radius: 10px;
+}
+.button {
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px;
+  }
+
+.custom-table{
+    width:80%;
+    padding: 10px 22px;
+    text-align:center;
+    margin:auto;
+    /* border: 3px solid green; */
+}
+
+.teammembers{
+    width:100%;
+}
+
+.typetable{
+    width: 100%;
+    margin:auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+.fullteam{
+    margin:auto;
+    width:95%;
+}
+
+.typedisplay{
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: 0;
+
+}
+
+.teamname{
+    font-size: 16px;
+    background-color:cadetblue;
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+    text-decoration: solid;
+    font-style: italic;
+}
+
+.leftplacement{
+    margin-left: 30%;
+}
+
+.formintrotext{
+    background-color:grey; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 20px;
+}
+.formtext{
+    background-color:lightblue; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px;
+}
+.teamsize{
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.forty{
+    margin-left:5px;
+    width:40%
+}
+
+.sixty{
+    margin-right:5px;
+    width:60%;
+}
+
+.teambuilderform{
+    margin-top: 5px;
+    display:flex;
+}
+
+.buttoncontainer{
+    width:60%;
+    display:flex;
+    margin:auto;
+}
+
+.bottomform{
+    width:60%;
+    display:flex;
+    margin:auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+.buttonhalf{
+    width:50%;
+}
+
+.teambuilderinternal{
+    margin-top:5px;
+    margin-bottom:5px;
+    margin-left: 10px;
+}

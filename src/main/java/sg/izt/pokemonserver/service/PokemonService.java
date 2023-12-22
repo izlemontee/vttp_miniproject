@@ -25,6 +25,7 @@ import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
 import jakarta.servlet.http.HttpSession;
 import sg.izt.pokemonserver.Utils;
+import sg.izt.pokemonserver.csvColumns;
 import sg.izt.pokemonserver.model.Pokemon;
 import sg.izt.pokemonserver.model.PokemonType;
 import sg.izt.pokemonserver.model.saveTeam;
@@ -134,6 +135,7 @@ public class PokemonService {
                 individualPokemonTypeTotal.add(totalType);
                 //System.out.println(individualPokemonTypeTotal.get(i));
             }
+            pokemon.setIndividualPokemonTypeTotal(individualPokemonTypeTotal);
             //System.out.println("individualPokemonTypeTotal: "+individualPokemonTypeTotal.size());
             for(int i = 0; i< individualPokemonTypeTotal.size(); i++){
                 if(pokemonType.size() < individualPokemonTypeTotal.size()){
@@ -158,10 +160,13 @@ public class PokemonService {
         
         // for the team
         for(Pokemon pokemon:pokemonTeam){
+          List<Float> pokemonTypes = pokemon.getIndividualPokemonTypeTotal();
+          JsonObject typeEffectiveness = setPokemonTypesJson(pokemonTypes);
             JsonObject pokemonJson = JOB.add("name", pokemon.getFullName())
                 .add("type1",pokemon.getType1())
                 .add("type2",pokemon.getType2())
                 .add("spriteurl",pokemon.getSpriteUrl())
+                .add("typeeffectiveness",typeEffectiveness)
                 .build();
             JAB.add(pokemonJson);
         }
@@ -184,6 +189,30 @@ public class PokemonService {
 
     }
 
+    public JsonObject setPokemonTypesJson(List<Float> types){
+      JsonObjectBuilder JOB = Json.createObjectBuilder();
+      JOB.add("fire",types.get(csvColumns.FIRE_COL-1));
+      JOB.add("water",types.get(csvColumns.WATER_COL-1));
+      JOB.add("grass",types.get(csvColumns.GRASS_COL-1));
+      JOB.add("electric",types.get(csvColumns.ELECTRIC_COL-1));
+      JOB.add("normal",types.get(csvColumns.NORMAL_COL-1));
+      JOB.add("flying",types.get(csvColumns.FLYING_COL-1));
+      JOB.add("rock",types.get(csvColumns.ROCK_COL-1));
+      JOB.add("steel",types.get(csvColumns.STEEL_COL-1));
+      JOB.add("bug",types.get(csvColumns.BUG_COL-1));
+      JOB.add("poison",types.get(csvColumns.POISON_COL-1));
+      JOB.add("psychic",types.get(csvColumns.PSYCHIC_COL-1));
+      JOB.add("ghost",types.get(csvColumns.GHOST_COL-1));
+      JOB.add("fighting",types.get(csvColumns.FIGHTING_COL-1));
+      JOB.add("dark",types.get(csvColumns.DARK_COL-1));
+      JOB.add("dragon",types.get(csvColumns.DRAGON_COL-1));
+      JOB.add("fairy",types.get(csvColumns.FAIRY_COL-1));
+      JOB.add("ground",types.get(csvColumns.GROUND_COL-1));
+      JOB.add("ice",types.get(csvColumns.ICE_COL-1));
+      JsonObject typeJsonObject = JOB.build();
+
+      return typeJsonObject;
+    }
     // to display all the teams in the database
     public List<teamPreview> displayTeams(){
         Map<Object,Object> teamMap = pokemonRepo.getAllTeams();
@@ -241,7 +270,9 @@ public class PokemonService {
             String type1 = pokemonJson.getString("type1");
             String type2 = pokemonJson.getString("type2");
             String spriteurl = pokemonJson.getString("spriteurl");
-            Pokemon pokemon = new Pokemon(pokemonName, type1, type2, spriteurl);
+            JsonObject individualTypeEffectivenessJson = pokemonJson.getJsonObject("typeeffectiveness");
+            PokemonType individualTypeEffectiveness= getTeamTypeValues(individualTypeEffectivenessJson);
+            Pokemon pokemon = new Pokemon(pokemonName, type1, type2, spriteurl, individualTypeEffectiveness);
             pokemonList.add(pokemon);
         }
 
@@ -257,44 +288,44 @@ public class PokemonService {
 
 
     }
+    
+    public JsonObject getIndividualTeamAsJson(String id){
+        String teamJson = pokemonRepo.getTeam(id);
+        System.out.println(teamJson);
+        JsonReader jr = Json.createReader(new StringReader(teamJson));
+        JsonObject teamJsonObject = jr.readObject();
+        return teamJsonObject;
+
+    }
+    public void setPokemonTypeEffectiveness (Pokemon pokemon){
+      List<Float> individualPokemonTypeTotal = new ArrayList<>();
+      PokemonType pt = pokemon.getTypeEffectiveness();
+      Float[] typings = pt.getTypings();
+      for(Float f:typings){
+        individualPokemonTypeTotal.add(f);
+      }
+      pokemon.setIndividualPokemonTypeTotal(individualPokemonTypeTotal);
+    }
 
     public PokemonType getTeamTypeValues(JsonObject teamCalculation){
         float FIRE = Float.parseFloat(teamCalculation.get("fire").toString());
-        System.out.println("fire");
         float WATER = Float.parseFloat(teamCalculation.get("water").toString());
-          System.out.println("water");
         float GRASS = Float.parseFloat(teamCalculation.get("grass").toString());
-          System.out.println("grass");
         float ELECTRIC= Float.parseFloat(teamCalculation.get("electric").toString());
-          System.out.println("electric");
         float NORMAL = Float.parseFloat(teamCalculation.get("normal").toString());
-          System.out.println("normal");
         float FLYING = Float.parseFloat(teamCalculation.get("flying").toString());
-          System.out.println("flying");
         float ROCK = Float.parseFloat(teamCalculation.get("rock").toString());
-          System.out.println("rock");
         float STEEL = Float.parseFloat(teamCalculation.get("steel").toString());
-          System.out.println("steel");
         float BUG = Float.parseFloat(teamCalculation.get("bug").toString());
-          System.out.println("bug");
         float POISON = Float.parseFloat(teamCalculation.get("poison").toString());
-          System.out.println("poison");
         float PSYCHIC = Float.parseFloat(teamCalculation.get("psychic").toString());
-          System.out.println("psychic");
         float GHOST = Float.parseFloat(teamCalculation.get("ghost").toString());
-          System.out.println("ghost");
         float FIGHTING = Float.parseFloat(teamCalculation.get("fighting").toString());
-          System.out.println("fighting");
         float DARK = Float.parseFloat(teamCalculation.get("dark").toString());
-          System.out.println("dark");
         float DRAGON = Float.parseFloat(teamCalculation.get("dragon").toString());
-          System.out.println("dragon");
         float FAIRY = Float.parseFloat(teamCalculation.get("fairy").toString());
-          System.out.println("fairy");
         float GROUND = Float.parseFloat(teamCalculation.get("ground").toString());
-          System.out.println("ground");
         float ICE = Float.parseFloat(teamCalculation.get("ice").toString());
-          System.out.println("ice");
 
         PokemonType type = new PokemonType(FIRE, WATER, GRASS, ELECTRIC, NORMAL, FLYING, 
         ROCK, STEEL, BUG, POISON, PSYCHIC, GHOST, 
