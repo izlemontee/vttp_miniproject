@@ -1,10 +1,12 @@
 package sg.izt.pokemonserver.repo;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +35,23 @@ public class PokemonRepo {
     
     public String getTeam(String id){
         return template.opsForHash().get("teamcalculator",id).toString();
+    }
+
+    public void saveHighScore(String playerInfo){
+        ListOperations<String,Object> LO = template.opsForList();
+        LO.leftPush("game",playerInfo);
+    }
+
+    public Long getSizeOfScores(){
+        ListOperations<String,Object> LO = template.opsForList();
+        Long size = LO.size("game");
+        return size;
+    }
+
+    public List<Object> getScores(Long size){
+        ListOperations<String,Object> LO = template.opsForList();
+        List<Object> scores = LO.range("game",0,size);
+
+        return scores;
     }
 }

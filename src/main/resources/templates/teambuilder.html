@@ -17,17 +17,23 @@
     <title>Team Builder</title>
 </head>
 <body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
     <div class="overall-container w3-light-grey">
         <h1>Team Builder</h1>
         <div class="text">
-            <div>Enter a Pokemon name</div>
-            <div>For regional forms, add a hyphen and the form at the end</div>
-            <div>E.g "Vulpix-Alola (no spaces)"</div>
+            Enter a Pokemon name <br>
+           For regional forms and names with more than 1 word, add a hyphen and the form at the end or in between names<br>
+            E.g "Vulpix-Alola (no spaces)" <br>
+            "tapu-koko"
         </div>
         <br>
         <div class="teambuilderform">
             <div class="w3-white forty">
-                <div th:if="${pokemonAPIerror}">
+                <div th:if="${pokemonAPIerror}" style="color:red; margin-left:10px">
                     The Pokemon you entered does not exist. Try again.
                 </div>
                 <br>
@@ -38,7 +44,7 @@
                         <div>
                             <input type="text" name="fullName" th:field="*{fullName}">
                         </div>
-                        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">
+                        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color:red; margin-left:10px">
                         
                         </div>
                     <div class="form-button">

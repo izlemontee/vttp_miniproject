@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        table, th,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        } 
+        /* div{
+            border: 1px solid black;
+        } */
+        th,td{
+            margin:auto;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's that Pokemon?</title>
+</head>
+<body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container ">
+        <div><p style="font-size: 18px;">
+            Test your Pokemon knowledge! A picture of a random Pokemon will be shown on screen,
+            and you have to guess its name. Try to maintain the longest streak possible!
+        </p></div>
+        <div class="flex-container">
+            <div class="button button-placement" style="font-size: 18px;">
+                <a th:href="@{/game/whosthatpokemon}" style="text-decoration:none">LET'S GO</a>
+            </div>
+            <div >
+                <div class="button button-placement" style="font-size:18px;">
+                    <a th:href="@{/game/highscore}" style="text-decoration: none;">High Scores</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

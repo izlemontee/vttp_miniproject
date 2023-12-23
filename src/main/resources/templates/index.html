@@ -10,15 +10,37 @@
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         /* div {text-align:center} */
+        h1{
+            text-align: center;
+        }
+        p{
+            text-align:center;
+            font-size: 18px;
+        }
     </style>
-    <title>Document</title>
+    <title>Pokemon Training Tool</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="w3-container w3-content w3-padding-64">
-        <h1>Welcome to the Pokemon rice fields</h1>
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container ">
+        <p>
+            This is a tool meant to help players understand the game better and 
+            to give them a clearer view of their team composition to assist them in 
+            developing strategies. You can also test your knowledge with the mini game below. Have fun!
+        </p>
+
         <div class="button button-placement">
             <a th:href="@{/pokemon/teamsize}">Pokemon Team Builder</a>
         </div>
+
+        <div class="button button-placement">
+            <a th:href="@{/game/start}">Who's that Pokemon?</a>
+        </div>
+    
     </div>
 </body>
 </html>

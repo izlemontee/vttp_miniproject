@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        table, th,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        } 
+        /* div{
+            border: 1px solid black;
+        } */
+        th,td{
+            margin:auto;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container">
+        <div class="game">
+            <p style="font-size: 25px;">Your final score was: <span th:text="${score}"></span></p>
+        </div>
+        <div class="game">
+            <form method="POST" th:action="@{/game/save}">
+                <div style="margin-top:10px; margin-bottom:10px;">
+                <label for="player" class="formintrotext">Enter your name:</label>
+                </div>
+                <input type="text" name="player">
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

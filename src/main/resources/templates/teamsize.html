@@ -12,40 +12,51 @@
         h1{
             text-align: center;
         }
+        /* div{
+            border: 1px solid black;
+        } */
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Initialise Your Team</title>
 </head>
 <body class="w3-pale-blue">
-    <div >
-        <h1>Pokemon Team Builder</h1>
-        <div>
-        <div class="w3-card we-left-align form w3-light-grey">
-            <div>
-            <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
-                <label for="numberOfPokemon" class="formintrotext">Enter Number Of Pokemon:</label>
-                <div class="teamsize">
-                <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
-                </div>
-                <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}"> 
-                </div>
-                <div class="form-button teamsize">
-                    <button type="submit">GO</button>
-                </div>
-            </form>
-            <div class="form-child-custom">
-                <div class="button button-placement">
-                    <a th:href="@{/pokemon/allteams}">View all teams</a>
-                </div>
-            </div>
-            </div>
-         
-            <br>
-
-
-        </div>
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
     </div>
+    <div class="flex-container"></div>
+        <div class="w3-card w3-light-grey w3-container w3-content w3-padding-64">
+            <h2 class="w3-wide w3-center">Pokemon Team Builder</h2>
+            <div class="init-form">
+                <div class="flex-container">
+                <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
+                    <label for="numberOfPokemon" class="formintrotext">Enter Number Of Pokemon:</label>
+                    <div class="teamsize">
+                    <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
+                    </div>
+                    <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}" style="color:red; margin-left:10px">
+                    </div>
+                    <div class="form-button teamsize">
+                        <button type="submit">GO</button>
+                    </div>
+                </form>
+                <div class="flexchild-right">
+                    <p >
+                        Enter the number of Pokemon you want in your team here (max 6). You will then be required
+                        to enter the names of the pokemon in your team in order for the app to make its calculations. 
+                    </p>
+                </div>
+                </div>
+                <div class="form-child-custom">
+                    <div class="button button-placement">
+                        <a th:href="@{/pokemon/allteams}">View all teams</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
     </div>
 </body>
 </html>

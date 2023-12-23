@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/style.css"> 
     <style>
@@ -18,11 +18,16 @@
     <title>All Teams</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="w3-container w3-content w3-padding-64">
-        <div>
-            <h2>Teams</h2>
-        </div>
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-content" style="margin-top: 10px">
         <div class="w3-ul w3-border w3-light-grey w3-text-grey shadow-container">
+            <div>
+                <h2 style="margin-left:10px">Teams</h2>
+            </div>
             <br>
             <div class="custom-table w3-white w3-card">
                 <div th:if="${allTeams.size() == 0}">

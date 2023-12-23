@@ -23,9 +23,15 @@
         }
 
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Display</title>
 </head>
 <body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
     <div class="w3-container w3-center w3-light-grey overall-container">
         <h2>Team display</h2>
         <div th:text="${name}" class="teamname"></div>
@@ -47,7 +53,7 @@
                         <td th:text="${pokemon.type2}" class="typedisplay"></td>
                         <td><img th:src="@{${pokemon.spriteUrl}}" alt=""></td>
                         <td>
-                            <table class="typetable">
+                            <table class="typetable move">
                                 <thead>
                                     <tr>
                                         <th class="fire">Fire</th>
@@ -60,14 +66,14 @@
                                         <th class="steel">Steel</th>
                                         <th class="bug">Bug</th>
                                         <th class="poison">Poison</th>
-                                        <th class="psychic">Psychic</th>
-                                        <th class="ghost">Ghost</th>
-                                        <th class="fighting">Fighting</th>
-                                        <th class="dark">Dark</th>
-                                        <th class="dragon">Dragon</th>
-                                        <th class="fairy">Fairy</th>
-                                        <th class="ground">Ground</th>
-                                        <th class="ice">Ice</th>
+                                        <th class="psychic move">Psychic</th>
+                                        <th class="ghost move">Ghost</th>
+                                        <th class="fighting move">Fighting</th>
+                                        <th class="dark move">Dark</th>
+                                        <th class="dragon move">Dragon</th>
+                                        <th class="fairy move">Fairy</th>
+                                        <th class="ground move">Ground</th>
+                                        <th class="ice move">Ice</th>
                                     </tr>
                                 </thead>
                                 <tbody>
