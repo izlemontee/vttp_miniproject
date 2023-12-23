@@ -97,7 +97,7 @@ public class PokemonController {
         }
         else{
             // if there are no validation errors, then add to the list and keep repeating until it reaches the team size
-            String fullName = form.getFullName();
+            String fullName = form.getFullName().toLowerCase();
             try{
             pokemonSvc.checkPokemonExists(fullName);
             pokemonList.add(fullName);
