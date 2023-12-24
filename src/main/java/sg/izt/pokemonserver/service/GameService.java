@@ -96,8 +96,8 @@ public class GameService {
         return pokemonList;
     }
 
-    public void saveHighScore(String name, Integer score){
-        String playerInfo = name+ ":" + score.toString();
+    public void saveHighScore(String name, Integer score, String difficulty){
+        String playerInfo = name+ "," + score.toString() + "," + difficulty;
         pokemonRepo.saveHighScore(playerInfo);
 
     }
@@ -109,9 +109,28 @@ public class GameService {
         List<Score> scoresFinal = new ArrayList<Score>();
         for(Object o:scoresRaw){
             String scoreString = o.toString();
-            String[] scoreSplit = scoreString.split(":");
+            String[] scoreSplit = scoreString.split(",");
             Integer scoreInt = Integer.parseInt(scoreSplit[1]);
-            Score score = new Score(scoreSplit[0], scoreInt);
+            String difficulty = scoreSplit[2];
+            Integer difficultyInt = 0;
+            switch(difficulty){
+                case "easy":
+                difficultyInt = 1;
+                break;
+
+                case "medium":
+                difficultyInt = 2;
+                break;
+
+                case "hard":
+                difficultyInt = 3;
+                break;
+
+                case "master":
+                difficultyInt = 4;
+                break;
+            }
+            Score score = new Score(scoreSplit[0], scoreInt, difficulty, difficultyInt);
             scoresFinal.add(score);
         }
         // for(Score s: scoresFinal){
@@ -119,6 +138,7 @@ public class GameService {
         // }
 
         Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
+        comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getDifficultyInt()));
    
         //comparator = comparator.thenComparing(comparator.reversed());
         scoresFinal = scoresFinal.stream()

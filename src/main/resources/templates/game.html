@@ -35,15 +35,33 @@
             <div class="formintrotext">
                 <p style="font-size:18px">Current score: <span th:text="${score}"></span></p>
             </div>
+            <div class="formintrotext">
+                <p style="font-size:18px">Playing on: <span th:text="${difficulty}"></span></p>
+                <p style="font-size:18px">Remaining lives: <span th:text="${lives}"></span></p>
+            </div>
+            <div class="formintrotext" th:if="${difficulty.equals('master')}" style="margin-top: 5px;">
+                <p style="font-size:18px">Tip: For pokemon with hyphens or spaces in the name, just add a hyphen in between names</p>
+           
+            </div>
             <!--put the pokemon here-->
             <div class="game">
                 <img th:src="${correctPokemon.url}" alt="" style="height:200px; width:auto">
             </div>
-            <div style="display: inline-flex;">
-                <div th:each="pokemon:${pokemonGameList}">
+            <div th:if="${difficulty.equals('master')}">
+                <div style="display: inline-flex;">
                     <form method="POST" th:action="@{/game/whosthatpokemon}">
-                        <button style="margin-left: 5px; margin-right:5px;" class="button" type="submit" name="pokemonselection" th:value="${pokemon.name}"><span th:text="${pokemon.name}"></span></button>
+                        <input type="text" name="pokemonselection">
+                        <button style="margin-left: 5px; margin-right:5px;" class="button" type="submit" name="pokemonselection">GO</button>
                     </form>
+                </div>
+            </div>
+            <div th:unless="${difficulty.equals('master')}">
+                <div style="display: inline-flex;">
+                    <div th:each="pokemon:${pokemonGameList}">
+                        <form method="POST" th:action="@{/game/whosthatpokemon}">
+                            <button style="margin-left: 5px; margin-right:5px;" class="button" type="submit" name="pokemonselection" th:value="${pokemon.name}"><span th:text="${pokemon.name}"></span></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

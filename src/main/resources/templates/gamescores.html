@@ -37,6 +37,7 @@
                             <tr class="w3-padding">
                                 <th class="w3-padding typedisplay">Name</th>
                                 <th class=" w3-margin-right typedisplay" >Score</th>
+                                <th class=" w3-margin-right typedisplay" >Difficulty</th>
                             </tr>
                         </thead>
                         <tbody class="w3-padding">
@@ -44,6 +45,7 @@
                                 <td class="w3-padding typedisplay" th:text="${score.name}">
                                 </td>
                                 <td th:text="${score.score}" class="w3-margin-right typedisplay"></td>
+                                <td th:text="${score.difficulty}" class="w3-margin-right typedisplay"></td>
                             </tr>
                         </tbody>
                     </table>
