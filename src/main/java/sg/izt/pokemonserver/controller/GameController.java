@@ -26,12 +26,15 @@ public class GameController {
 
     @GetMapping(path = "/start")
     public String showFirstPage(HttpSession session, Model model){
+        session.invalidate();
 
         return "gamestart";
     }
     
     @GetMapping(path = "/whosthatpokemon")
-    public String startGame(HttpSession session, Model model){
+    public String startGame(HttpSession session, Model model) throws Exception{
+
+        List<Integer> newNumberList = gameSvc.generateNewListOfNumbers();
 
         Object difficultyObject = session.getAttribute("difficulty");
         if(difficultyObject == null){
@@ -40,9 +43,15 @@ public class GameController {
         String difficulty = difficultyObject.toString();
         Integer lives = Integer.parseInt(session.getAttribute("lives").toString());
 
-        Map<String,PokemonInGame> map = gameSvc.constructOptions();
-        PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
-        List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
+        // get the correct pokemon to display
+        PokemonInGame correctPokemon = gameSvc.getCorrectPokemon(newNumberList);
+        newNumberList = gameSvc.updateNumberList(newNumberList, correctPokemon.getDexID());
+        session.setAttribute("numberList", newNumberList);
+        List<PokemonInGame> options = gameSvc.generateOptions(correctPokemon);
+
+        // Map<String,PokemonInGame> map = gameSvc.constructOptions();
+        // PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
+        // List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
 
         Integer score = 0;
         session.setAttribute("score", score);
@@ -51,7 +60,7 @@ public class GameController {
         model.addAttribute("difficulty", difficulty);
         model.addAttribute("lives", lives);
         model.addAttribute("correctPokemon", correctPokemon);
-        model.addAttribute("pokemonGameList", pokemonGameList);
+        model.addAttribute("pokemonGameList", options);
         model.addAttribute("score", score);
 
 
@@ -59,7 +68,7 @@ public class GameController {
     }
 
     @PostMapping(path = "/whosthatpokemon")
-    public String runGame(@RequestBody MultiValueMap<String,Object> mvm, HttpSession session, Model model){
+    public String runGame(@RequestBody MultiValueMap<String,Object> mvm, HttpSession session, Model model)throws Exception{
         
         Object difficultyObject = session.getAttribute("difficulty");
         String difficulty = difficultyObject.toString();
@@ -69,21 +78,34 @@ public class GameController {
         String correct = session.getAttribute("correctPokemon").toString();
         Integer score = (Integer)session.getAttribute("score");
         if(selection.equals(correct)){
-
-            Map<String,PokemonInGame> map = gameSvc.constructOptions();
-            PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
-            List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
-
-
             score +=1;
             session.setAttribute("score", score);
+            if(score == 1018){
+                model.addAttribute("score", score);
+                return "gamecomplete";
+            }
+
+            // Map<String,PokemonInGame> map = gameSvc.constructOptions();
+            // PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
+            // List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
+
+            List<Integer> numberList = (List<Integer>)session.getAttribute("numberList");
+            System.out.println("list size: "+numberList.size());
+            // get the correct pokemon to display
+            PokemonInGame correctPokemon = gameSvc.getCorrectPokemon(numberList);
+            numberList = gameSvc.updateNumberList(numberList, correctPokemon.getDexID());
+            session.setAttribute("numberList", numberList);
+            List<PokemonInGame> options = gameSvc.generateOptions(correctPokemon);
+
+
+
             // the new one
             session.setAttribute("correctPokemon", correctPokemon.getName());
 
             model.addAttribute("difficulty", difficulty);
             model.addAttribute("lives", lives);
             model.addAttribute("correctPokemon", correctPokemon);
-            model.addAttribute("pokemonGameList", pokemonGameList);
+            model.addAttribute("pokemonGameList", options);
             model.addAttribute("score", score);
 
             return "game";
@@ -93,20 +115,31 @@ public class GameController {
             lives -= 1;
             session.setAttribute("lives", lives);
             if(lives > 0){
-                Map<String,PokemonInGame> map = gameSvc.constructOptions();
-                PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
-                List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
+
+                // Map<String,PokemonInGame> map = gameSvc.constructOptions();
+                // PokemonInGame correctPokemon = gameSvc.randomlySelectPokemon(map);
+                // List<PokemonInGame> pokemonGameList = gameSvc.generateList(map);
+
+                List<Integer> numberList = (List<Integer>)session.getAttribute("numberList");
+                // get the correct pokemon to display
+                PokemonInGame correctPokemon = gameSvc.getCorrectPokemon(numberList);
+                numberList = gameSvc.updateNumberList(numberList, correctPokemon.getDexID());
+                session.setAttribute("numberList", numberList);
+                List<PokemonInGame> options = gameSvc.generateOptions(correctPokemon);
+                
                 session.setAttribute("correctPokemon", correctPokemon.getName());
 
                 model.addAttribute("difficulty", difficulty);
                 model.addAttribute("lives", lives);
                 model.addAttribute("correctPokemon", correctPokemon);
-                model.addAttribute("pokemonGameList", pokemonGameList);
+                model.addAttribute("pokemonGameList", options);
                 model.addAttribute("score", score);
 
                 return "game";
 
             }
+            
+            model.addAttribute("correctPokemon",session.getAttribute("correctPokemon"));
             model.addAttribute("score", score);
             return "gameend";
         }

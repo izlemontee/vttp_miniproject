@@ -270,6 +270,12 @@ public class PokemonController {
         return "redirect:/pokemon/teamsize";
     }
 
+    @GetMapping(path = "/apiguide")
+    public String showApiGuide(){
+
+        return "apiguide";
+    }
+
 
 
 }

@@ -2,6 +2,7 @@ package sg.izt.pokemonserver.service;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import sg.izt.pokemonserver.model.Pokemon;
 import sg.izt.pokemonserver.model.PokemonInGame;
 import sg.izt.pokemonserver.model.Score;
 import sg.izt.pokemonserver.repo.PokemonRepo;
@@ -28,7 +30,7 @@ import sg.izt.pokemonserver.repo.PokemonRepo;
 public class GameService {
     final String BASE_API_URL = "https://pokeapi.co/api/v2/";
     final String SEARCH_POKEMON = "pokemon/";
-    final Integer LIMIT = 1025;
+    final Integer LIMIT = 1017;
     final Integer numberOfOptions = 4;
     RestTemplate restTemplate = new RestTemplate();
     Random random = new Random();
@@ -43,17 +45,21 @@ public class GameService {
             String errormessage = "Pokemon not found";
             throw new Exception(errormessage);
         }
+        
         // entire json data
         String resultBody = result.getBody().toString();
+        //System.out.println(resultBody);
         JsonReader jReader = Json.createReader(new StringReader(resultBody));
         JsonObject jsonObject = jReader.readObject();
         
         // get the sprite url
         JsonObject spriteObj = jsonObject.getJsonObject("sprites");
-        String spriteUrl = spriteObj.getString("front_default");
+        //System.out.println(spriteObj);
+        // String spriteUrl = spriteObj.get("front_default").toString();
+        String spriteUrl = spriteObj.getString("front_default").toString();
         String name = jsonObject.getJsonObject("species").getString("name");
-
-        PokemonInGame pokemon = new PokemonInGame(name, spriteUrl);
+        Integer dexId = jsonObject.getJsonNumber("id").intValue();
+        PokemonInGame pokemon = new PokemonInGame(name, spriteUrl,dexId);
 
         return pokemon;
     }
@@ -137,8 +143,10 @@ public class GameService {
         //     System.out.println(s.getScore());
         // }
 
-        Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
-        comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getDifficultyInt()));
+        Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getDifficultyInt());
+        comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getScore()));
+        // Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
+        // comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getDifficultyInt()));
    
         //comparator = comparator.thenComparing(comparator.reversed());
         scoresFinal = scoresFinal.stream()
@@ -146,6 +154,73 @@ public class GameService {
                                 .collect(Collectors.toList());
 
         return scoresFinal;
+    }
+
+
+    // generates a fresh list of numbers to choose from for the api
+    public List<Integer> generateNewListOfNumbers(){
+        List<Integer> numberList = new ArrayList<Integer>();
+        for(Integer i = 1; i<1018;i++){
+            numberList.add(i);
+        }
+
+        return numberList;
+    }
+
+
+    // for the correct pokemon to be shown
+    //public PokemonInGame getCorrectPokemon(List<Integer> numberList) throws Exception{
+    public PokemonInGame getCorrectPokemon(List<Integer> numberList) throws Exception{
+        Integer index = random.nextInt(numberList.size());
+        System.out.println("RNG: "+index);
+        System.out.println("Ndex number: "+numberList.get(index));
+        Integer numberForApi = numberList.get(index);
+        PokemonInGame pokemonInGame = null;
+        while(pokemonInGame == null){
+            try{
+                pokemonInGame = getPokemon(numberForApi);
+            }
+            catch (Exception e){
+                System.out.println("API error");
+            }
+        }
+        //pokemonInGame = getPokemon(numberForApi);
+        return pokemonInGame;
+    }
+
+    // update the number list 
+    public List<Integer> updateNumberList(List<Integer> numberList, Integer number){
+        Integer index = numberList.indexOf(number);
+        System.out.println("The pokemon number was: "+number);
+        System.out.println("the index to be remove: "+index);
+        
+        numberList.remove(index);
+
+        return numberList;
+    }
+
+    // generate the options
+    //public List<PokemonInGame> generateOptions(PokemonInGame correctPokemon)throws Exception{
+    public List<PokemonInGame> generateOptions(PokemonInGame correctPokemon)throws Exception{
+        List<PokemonInGame> options = new ArrayList<PokemonInGame>();
+        while(options.size()<3){
+            try{
+                PokemonInGame pokemonInGame = getPokemon(random.nextInt(LIMIT));
+                options.add(pokemonInGame);
+            }
+            catch(Exception e){
+                System.out.println("API error");
+            }
+        }
+        // for(int i = 0; i<3;i++){
+        //     PokemonInGame pokemonInGame = getPokemon(random.nextInt(LIMIT));
+        //     System.out.println("can");
+        //     options.add(pokemonInGame);
+        // }
+        options.add(correctPokemon);
+        Collections.shuffle(options);
+        return options;
+
     }
 
     

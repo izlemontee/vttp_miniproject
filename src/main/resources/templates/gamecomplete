@@ -32,7 +32,7 @@
     </div>
     <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container">
         <div class="game">
-            <p style="font-size: 25px;">The previous Pokemon was: <span th:text="${correctPokemon}"></span></p>
+            <p style="font-size: 25px;">You have named all the Pokemon!!!</span></p>
             <p style="font-size: 25px;">Your final score was: <span th:text="${score}"></span></p>
         </div>
         <div class="game">

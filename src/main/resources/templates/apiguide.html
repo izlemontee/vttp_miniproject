@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        h1{
+            text-align: center;
+        }
+        /* div{
+            border: 1px solid black;
+        } */
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to use API</title>
+</head>
+<body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="flex-container">
+        <div class="w3-card w3-light-grey w3-container w3-content w3-padding-64">
+            <h2 class="w3-wide w3-center">How to use REST API</h2>
+            <div class="init-form">
+                <div style="text-align: center;">
+                    <p style="font-size: 18px;">This is a simple guide on how to use the REST API functions of this web app.
+                        The purpose of the API is to return the team composition and calculations in JSON format.
+                        For starters, the API can be accessed by using the link below:
+                    </p>
+                    <div class="formintrotext">
+                        pokemontrainingtool.up.railway.app/api/team
+                    </div>
+                    <p style="font-size: 18px;">
+                        At the end of the url, add another slash followed by the team name you want to access, provided it exists, e.g
+                        pokemontrainingtool.up.railway.app/api/team/teamname
+                    </p>
+                </div>
+                <div class="button w3-panel">
+                    <a th:href="@{/pokemon/goback}">Back to team builder</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>

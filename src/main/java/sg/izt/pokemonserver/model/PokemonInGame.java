@@ -4,6 +4,22 @@ public class PokemonInGame {
 
     private String name;
     private String url;
+    private Integer dexID;
+    
+
+
+
+    public Integer getDexID() {
+        return dexID;
+    }
+    public void setDexID(Integer dexID) {
+        this.dexID = dexID;
+    }
+    public PokemonInGame(String name, String url, Integer dexID) {
+        this.name = name;
+        this.url = url;
+        this.dexID = dexID;
+    }
     public String getName() {
         return name;
     }
