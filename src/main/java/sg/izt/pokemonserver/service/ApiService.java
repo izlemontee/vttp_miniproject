@@ -27,6 +27,9 @@ public class ApiService {
     csvService csvSvc;
 
     @Autowired
+    PokemonService pokemonSvc;
+
+    @Autowired
     PokemonRepo pokemonRepo;
     
     public Map<String,Object> getTeamAsMap(String id){
@@ -110,25 +113,6 @@ public class ApiService {
     }
 
     public JsonObject parseTypeEffectiveness(JsonObject teamCalculation, String[] typings){
-        // float FIRE = Float.parseFloat(teamCalculation.get("fire").toString());
-        // float WATER = Float.parseFloat(teamCalculation.get("water").toString());
-        // float GRASS = Float.parseFloat(teamCalculation.get("grass").toString());
-        // float ELECTRIC= Float.parseFloat(teamCalculation.get("electric").toString());
-        // float NORMAL = Float.parseFloat(teamCalculation.get("normal").toString());
-        // float FLYING = Float.parseFloat(teamCalculation.get("flying").toString());
-        // float ROCK = Float.parseFloat(teamCalculation.get("rock").toString());
-        // float STEEL = Float.parseFloat(teamCalculation.get("steel").toString());
-        // float BUG = Float.parseFloat(teamCalculation.get("bug").toString());
-        // float POISON = Float.parseFloat(teamCalculation.get("poison").toString());
-        // float PSYCHIC = Float.parseFloat(teamCalculation.get("psychic").toString());
-        // float GHOST = Float.parseFloat(teamCalculation.get("ghost").toString());
-        // float FIGHTING = Float.parseFloat(teamCalculation.get("fighting").toString());
-        // float DARK = Float.parseFloat(teamCalculation.get("dark").toString());
-        // float DRAGON = Float.parseFloat(teamCalculation.get("dragon").toString());
-        // float FAIRY = Float.parseFloat(teamCalculation.get("fairy").toString());
-        // float GROUND = Float.parseFloat(teamCalculation.get("ground").toString());
-        // float ICE = Float.parseFloat(teamCalculation.get("ice").toString());
-
         JsonObjectBuilder JOB = Json.createObjectBuilder();
         for(String s:typings){
             JOB.add(s,(JsonNumber)Json.createValue(Double.parseDouble(teamCalculation.get(s).toString())));
@@ -137,19 +121,50 @@ public class ApiService {
         return types;
     }
 
-    public Map<String, Object> testMap(){
-        Map<String, Object> testMap = new HashMap<String, Object>();
-        Map<String, String> nestedMap = new HashMap<String, String>();
-        List<String> list = new ArrayList<>();
-        list.add("listone");
-        list.add("listtwo");
-        list.add("listthree");
-        nestedMap.put("one","one");
-        nestedMap.put("keytwo","two");
-        testMap.put("Name","name");
-        testMap.put("nested",nestedMap);
-        testMap.put("list",list);
-        return testMap;
+    public List<Pokemon> generateTeam(String[] teamArray){
+        List<Pokemon> teamList = new ArrayList<Pokemon>();
+        for (String s: teamArray){
+            Pokemon pokemon = pokemonSvc.getPokemonInfo(s);
+            teamList.add(pokemon);
+        }
+        return teamList;
+
+    }
+
+    public Map<String,Object> generateTeamFromScratch(List<Pokemon> team, List<Float> calculation){
+        Map<String,Object> completeMap = new HashMap<>();
+        List<Map> teamList = new ArrayList<>();
+        PokemonType pt = new PokemonType();
+        String[] typeStrings = pt.getTypingString();
+        for(Pokemon p : team){
+            Map<String,Object> individualPokemonMap = new HashMap<>();
+            individualPokemonMap.put("name", p.getFullName());
+            individualPokemonMap.put("type1", p.getType1());
+            individualPokemonMap.put("type2", p.getType2());
+            individualPokemonMap.put("spriteurl",p.getSpriteUrl());
+
+            Map<String,Float> typeMap = listTypeEffectivenessFromScratch(p.getIndividualPokemonTypeTotal(), typeStrings);
+            individualPokemonMap.put("typeeffectiveness",typeMap);
+            teamList.add(individualPokemonMap);
+        }
+
+        Map<String,Float> teamTypeMap = listTypeEffectivenessFromScratch(calculation, typeStrings);
+
+        completeMap.put("Pokemon",teamList);
+        completeMap.put("teamcalculation",teamTypeMap);
+
+
+
+        return completeMap;
+    }
+
+    public Map<String,Float> listTypeEffectivenessFromScratch(List<Float> typeCalculation, String[] typings){
+        Map<String, Float> typeMap = new HashMap<>();
+        for(int i = 0; i<typings.length; i++){
+            Float type = typeCalculation.get(i);
+            typeMap.put(typings[i],type);
+        }
+        return typeMap;
     }
 
 }

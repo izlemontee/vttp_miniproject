@@ -41,6 +41,13 @@
                         At the end of the url, add another slash followed by the team name you want to access, provided it exists, e.g
                         pokemontrainingtool.up.railway.app/api/team/teamname
                     </p>
+                    <p style="font-size: 18px;">
+                        If you wish to generate a team from scratch directly via the API, you can too! Simply use the link 
+                        below and enter your Pokemon names, separating each Pokemon with "%2b".
+                    </p>
+                    <div class="formintrotext">
+                        pokemontrainingtool.up.railway.app/api/generate?team=
+                    </div>
                 </div>
                 <div class="button w3-panel">
                     <a th:href="@{/pokemon/goback}">Back to team builder</a>

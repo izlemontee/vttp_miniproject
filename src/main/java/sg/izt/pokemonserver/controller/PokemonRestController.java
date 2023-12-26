@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.JsonObject;
@@ -42,13 +43,25 @@ public class PokemonRestController {
         return response;
     }
 
-    @GetMapping(path = "/test")
-    public ResponseEntity testResponse(){
-        Map<String,Object> testMap = apiSvc.testMap();
-        ResponseEntity response = new ResponseEntity(testMap,HttpStatusCode.valueOf(201));
-        return response;
-    }
+    @GetMapping(path = "/generate")
+    public ResponseEntity getPokemonFromParam(@RequestParam(name = "team") String teamParam){
+        String[] teamArray = teamParam.split("\\+");
+        try{
+            List<Pokemon> teamList = apiSvc.generateTeam(teamArray);
+            List<Float> typeList = pokemonSvc.calculateTeam(teamList);
+            Map<String,Object> completeMap = apiSvc.generateTeamFromScratch(teamList, typeList);
+            ResponseEntity<Map> response = new ResponseEntity<Map>(completeMap, HttpStatusCode.valueOf(200));
+            return response;
+        }
 
+        catch (Exception e){
+            ResponseEntity<String> response = new ResponseEntity<String>("Pokemon Not Found",HttpStatusCode.valueOf(404));
+            return response;
+        }
+
+        //return response;
+
+    }
     
     // @PostMapping(path = "/search")
     // public String searchPokemon(@RequestBody MultiValueMap <String,String> form){
