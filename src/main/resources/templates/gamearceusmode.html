@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        /* div {text-align:center} */
+        table, th,td {
+        /* border: 1px solid black; */
+        border-collapse: collapse;
+        } 
+        /* div{
+            border: 1px solid black;
+        } */
+        th,td{
+            margin:auto;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's that Pokemon?</title>
+</head>
+<body class="w3-pale-blue">
+    <div class="bannertext">
+        <a th:href="@{/}" style="text-decoration:none">
+            <h1 >Pokemon Training Tool</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container">
+        <div class="game">
+            <div class="formintrotext">
+                <p style="font-size:18px">Current score: <span th:text="${score}"></span></p>
+            </div>
+            <div class="formintrotext">
+                <p style="font-size:18px">Playing on: <span th:text="${difficulty}"></span></p>
+                <p style="font-size:18px">Remaining lives: <span th:text="${lives}"></span></p>
+            </div>
+            <div class="formintrotext" th:if="${difficulty.equals('master')}" style="margin-top: 5px;">
+                <p style="font-size:18px">Tip: For pokemon with hyphens or spaces in the name, just add a hyphen in between names</p>
+           
+            </div>
+            <!--put the pokemon here-->
+            <div class="game">
+                <img th:src="${correctPokemon.url}" alt="" style="height:200px; width:auto">
+            </div>
+            <div >
+                <div style="display: inline-flex;">
+                    <form method="POST" th:action="@{/game/whosthatpokemon/arceusmode}" th:object="${hardmodepokemon}" name="hardmodepokemon">
+                        <div>
+                            <p>Name</p>
+                            <input type="text" name="pokemonselection" th:field="*{name}">
+                        </div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>Type 1</td>
+                                        <td>Type 2</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select name="type1" id="type1"  th:value="*{type1}">
+                                                <option th:each="type:${typingstring}" th:text="${type}"></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="type2" id="type2" th:value="*{type2}">
+                                                <option th:each="type:${typingstring}"  th:text="${type}"></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button style="margin-left: 5px; margin-right:5px; margin-top:5px;" class="button" type="submit">GO</button>
+                    </form>
+                </div>
+                <!-- <div style="display: inline-flex;">
+                    <form method="POST" th:action="@{/game/whosthatpokemon/arceusmode}" name="hardmodepokemon">
+                        <div>
+                            <input type="text" name="pokemonselection" th:value="*{name}">
+                        </div>
+                        <select name="type1" id="type1" >
+                            <option th:each="type:${typingstring}" th:text="${type}"></option>
+                        </select>
+                        <select name="type2" id="type2">
+                            <option th:each="type:${typingstring}"  th:text="${type}"></option>
+                        </select>
+                        <button style="margin-left: 5px; margin-right:5px;" class="button" type="submit">GO</button>
+                    </form>
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

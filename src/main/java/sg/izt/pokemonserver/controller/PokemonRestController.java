@@ -46,6 +46,10 @@ public class PokemonRestController {
     @GetMapping(path = "/generate")
     public ResponseEntity getPokemonFromParam(@RequestParam(name = "team") String teamParam){
         String[] teamArray = teamParam.split("\\+");
+        if (teamArray.length>6){
+            ResponseEntity<String> response = new ResponseEntity<String>("Cannot have more than 6 Pokemon.",HttpStatusCode.valueOf(400));
+            return response;
+        }
         try{
             List<Pokemon> teamList = apiSvc.generateTeam(teamArray);
             List<Float> typeList = pokemonSvc.calculateTeam(teamList);

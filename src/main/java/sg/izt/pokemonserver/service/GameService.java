@@ -18,8 +18,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import sg.izt.pokemonserver.model.HardModePokemon;
 import sg.izt.pokemonserver.model.Pokemon;
 import sg.izt.pokemonserver.model.PokemonInGame;
 import sg.izt.pokemonserver.model.Score;
@@ -60,6 +62,45 @@ public class GameService {
         String name = jsonObject.getJsonObject("species").getString("name");
         Integer dexId = jsonObject.getJsonNumber("id").intValue();
         PokemonInGame pokemon = new PokemonInGame(name, spriteUrl,dexId);
+
+        return pokemon;
+    }
+
+
+    
+    public PokemonInGame getPokemonOnArceusMode(Integer pokemonNumber) throws Exception{
+        String url_pokemonSearch = BASE_API_URL+SEARCH_POKEMON+pokemonNumber;
+        ResponseEntity<String> result = restTemplate.getForEntity(url_pokemonSearch, String.class);
+        if(!result.getStatusCode().equals(HttpStatusCode.valueOf(200))){
+            String errormessage = "Pokemon not found";
+            throw new Exception(errormessage);
+        }
+        
+        // entire json data
+        String resultBody = result.getBody().toString();
+        //System.out.println(resultBody);
+        JsonReader jReader = Json.createReader(new StringReader(resultBody));
+        JsonObject jsonObject = jReader.readObject();
+        
+        // get the sprite url
+        JsonObject spriteObj = jsonObject.getJsonObject("sprites");
+        //System.out.println(spriteObj);
+        // String spriteUrl = spriteObj.get("front_default").toString();
+        String spriteUrl = spriteObj.getString("front_default").toString();
+        String name = jsonObject.getJsonObject("species").getString("name");
+        Integer dexId = jsonObject.getJsonNumber("id").intValue();
+         // get the types
+        JsonArray typeData = jsonObject.getJsonArray("types");
+        JsonObject typeOneObj = typeData.getJsonObject(0);
+        JsonObject typeOnejson = typeOneObj.getJsonObject("type");
+        String typeOne = typeOnejson.getString("name");
+        String typeTwo = "N/A";
+        if(typeData.size()>1){
+            JsonObject typeTwoObj = typeData.getJsonObject(1);
+            JsonObject typeTwojson = typeTwoObj.getJsonObject("type");
+            typeTwo = typeTwojson.getString("name");
+        }
+        PokemonInGame pokemon = new PokemonInGame(name, spriteUrl,dexId,typeOne,typeTwo);
 
         return pokemon;
     }
@@ -135,6 +176,10 @@ public class GameService {
                 case "master":
                 difficultyInt = 4;
                 break;
+
+                case "arceus":
+                difficultyInt = 5;
+                break;
             }
             Score score = new Score(scoreSplit[0], scoreInt, difficulty, difficultyInt);
             scoresFinal.add(score);
@@ -188,6 +233,28 @@ public class GameService {
         return pokemonInGame;
     }
 
+
+    
+    // for the correct pokemon to be shown
+    //public PokemonInGame getCorrectPokemon(List<Integer> numberList) throws Exception{
+    public PokemonInGame getCorrectPokemonOnArceusMode(List<Integer> numberList) throws Exception{
+        Integer index = random.nextInt(numberList.size());
+        System.out.println("RNG: "+index);
+        System.out.println("Ndex number: "+numberList.get(index));
+        Integer numberForApi = numberList.get(index);
+        PokemonInGame pokemonInGame = null;
+        while(pokemonInGame == null){
+            try{
+                pokemonInGame = getPokemonOnArceusMode(numberForApi);
+            }
+            catch (Exception e){
+                System.out.println("API error");
+            }
+        }
+        //pokemonInGame = getPokemon(numberForApi);
+        return pokemonInGame;
+    }
+
     // update the number list 
     public List<Integer> updateNumberList(List<Integer> numberList, Integer number){
         Integer index = numberList.indexOf(number);
@@ -220,6 +287,24 @@ public class GameService {
         options.add(correctPokemon);
         Collections.shuffle(options);
         return options;
+
+    }
+
+    public boolean compareResults(PokemonInGame correct, HardModePokemon submission){
+        if(submission.getName().equals(correct.getName())){
+            boolean compareTypeOneTypeOne = submission.getType1().equals(correct.getType1());
+            boolean compareTypeOneTypeTwo = submission.getType1().equals(correct.getType2());
+            if(compareTypeOneTypeOne || compareTypeOneTypeTwo){
+                boolean compareTypeTwoTypeOne = submission.getType2().equals(correct.getType1());
+                boolean compareTypeTwoTypeTwo = submission.getType2().equals(correct.getType2());
+                boolean typeOneXORTypeTwo = !(submission.getType1().equals(submission.getType2()));
+                if((compareTypeTwoTypeOne || compareTypeTwoTypeTwo) && typeOneXORTypeTwo){
+                    return true;
+                }
+            }
+        }
+
+        return false;
 
     }
 

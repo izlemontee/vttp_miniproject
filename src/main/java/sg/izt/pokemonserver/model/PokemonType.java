@@ -195,6 +195,13 @@ public class PokemonType {
 
         return typings;
         }
+
+    public String[] getTypingStringWithNA(){
+        String[] typings = {"fire","water","grass","electric","normal","flying","rock","steel","bug"
+        ,"poison","psychic","ghost","fighting","dark","dragon","fairy","ground","ice","N/A"};
+
+        return typings;
+        }
     
 
     
