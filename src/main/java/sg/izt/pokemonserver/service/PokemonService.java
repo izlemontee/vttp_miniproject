@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.catalina.connector.Response;
+// import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
+// import org.springframework.core.ParameterizedTypeReference;
+// import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
-import jakarta.json.JsonValue;
+// import jakarta.json.JsonValue;
 import jakarta.servlet.http.HttpSession;
 import sg.izt.pokemonserver.Utils;
 import sg.izt.pokemonserver.csvColumns;
@@ -238,7 +238,7 @@ public class PokemonService {
     public String generateTeamPreview(String teamString){
         JsonReader jReader = Json.createReader(new StringReader(teamString));
         JsonObject teamJsonObject = jReader.readObject();
-        List<String> nameList = new ArrayList<String>();
+        //List<String> nameList = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
         JsonArray teamArray = teamJsonObject.getJsonArray("Pokemon");
         for(int i = 0; i<teamArray.size(); i++){

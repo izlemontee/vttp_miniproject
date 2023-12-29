@@ -22,7 +22,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import sg.izt.pokemonserver.model.HardModePokemon;
-import sg.izt.pokemonserver.model.Pokemon;
+//import sg.izt.pokemonserver.model.Pokemon;
 import sg.izt.pokemonserver.model.PokemonInGame;
 import sg.izt.pokemonserver.model.Score;
 import sg.izt.pokemonserver.repo.PokemonRepo;

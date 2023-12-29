@@ -14,13 +14,18 @@
         border: 1px solid black;
         border-collapse: collapse;
         } 
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
+        
     </style>
     <title>All Teams</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
     <div class="w3-container w3-content" style="margin-top: 10px">
@@ -55,9 +60,9 @@
                 </div>
             </div>
             <div>
-                <div class="button button-placement">
-                    <a th:href="@{/pokemon/goback}">Back to team builder</a>
-                </div>
+              
+            <a th:href="@{/pokemon/goback}" class="button button-placement">Back to team builder</a>
+              
             </div>
         </div>
     </div>

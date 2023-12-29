@@ -14,15 +14,19 @@
         /* div{
             border: 1px solid black;
         } */
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to use API</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
     <div class="flex-container">
@@ -49,9 +53,8 @@
                         pokemontrainingtool.up.railway.app/api/generate?team=
                     </div>
                 </div>
-                <div class="button w3-panel">
-                    <a th:href="@{/pokemon/goback}">Back to team builder</a>
-                </div>
+                <a th:href="@{/pokemon/goback}" class="button button-placement">Back to team builder</a>
+              
 
             </div>
         </div>

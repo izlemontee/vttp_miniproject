@@ -18,13 +18,17 @@
         th,td{
             margin:auto;
         }
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
     </style>
     <title>Your Team</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
     <div class="w3-container w3-center w3-light-grey overall-container">
@@ -125,12 +129,10 @@
                     <button type="submit">Save</button>
                 </form>
             </div>
-            <div class="teamname">
-                <a th:href="@{/pokemon/goback}">Back to team builder</a>
-            </div>
-            <div class="teamname">
-                <a th:href="@{/pokemon/allteams}">View all teams</a>
-            </div>
+                <a th:href="@{/pokemon/goback}" class="teamname">Back to team builder</a>
+    
+         <a th:href="@{/pokemon/allteams}" class="teamname">View all teams</a>
+         
         </div>
 </body>
 </html>

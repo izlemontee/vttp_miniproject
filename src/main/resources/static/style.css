@@ -232,20 +232,31 @@
     margin-left: 10px;
 }
 
-.bannertext{
+.banner{
     background-color: grey; /* Green */
     border: none;
     color: white;
     padding: 10px 22px;
     text-align:center;
     text-decoration: none;
+    font-weight: bold;
+    text-shadow: #fb7185;
     display: inline-block;
-    font-size: 16px;
-    border-radius: 20px;
+    font-size: 20px;
+    border-radius: 0px 0px 20px 20px;
     margin: auto;
     width: 100%;
+    background-image: url("/svbanner.png");
+    background-position: 0px -8px;
     
      /* transform: skew(5deg);  */
+}
+
+.bannertext{
+    font-size: 35px;
+    font-weight: bold;
+    text-shadow: 2px 2px black;
+
 }
 
 .init-form{
@@ -285,7 +296,13 @@
     width:50%;
     margin:auto;
 }
-
+/* @media (max-width: 767px) {
+    button {
+      display: block;
+      margin-bottom: 10px;
+      margin-right: 0;
+    }
+  } */
 
 /* @media (max-width: 600px) {
 .typetable{width:40%;}

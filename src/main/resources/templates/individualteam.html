@@ -21,23 +21,27 @@
         th,td{
             margin:auto;
         }
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
 
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Display</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
-    <div class="w3-container w3-center w3-light-grey overall-container">
+    <div class="w3-container w3-center w3-light-grey overall-container"  style="overflow:auto; position: relative;">
         <h2>Team display</h2>
-        <div th:text="${name}" class="teamname"></div>
-        <div>
-            <table class="fullteam w3-white w3-card">
-                <thead>
+        <div th:text="${name}" class="teamname" style="margin-top: 5px; margin-bottom: 5px;"></div>
+        <div  style="overflow:auto; position: relative;">
+            <table class="fullteam w3-white  w3-card" style="overflow:auto; position: relative;">
+                <thead >
                     <tr>
                         <th>Pokemon</th>
                         <th class="typedisplay">Type 1</th>
@@ -52,8 +56,8 @@
                         <td th:text="${pokemon.type1}" class="typedisplay"></td>
                         <td th:text="${pokemon.type2}" class="typedisplay"></td>
                         <td><img th:src="@{${pokemon.spriteUrl}}" alt=""></td>
-                        <td>
-                            <table class="typetable move">
+                        <td  style="overflow:auto; position: relative;">
+                            <table class="typetable move" style="overflow:auto; position: relative;">
                                 <thead>
                                     <tr>
                                         <th class="fire">Fire</th>
@@ -123,12 +127,8 @@
                     </tbody>
                 </table>
         </div>
-        <div class="button w3-panel">
-            <a th:href="@{/api/team/{id}(id=${name})}">View as JSON</a>
-        </div>
-        <div class="button w3-panel">
-            <a th:href="@{/pokemon/goback}">Back to team builder</a>
-        </div>
+            <a th:href="@{/api/team/{id}(id=${name})}" class="button w3-panel">View as JSON</a>
+            <a th:href="@{/pokemon/goback}" class="button w3-panel">Back to team builder</a>
     </div>
 </body>
 </html>

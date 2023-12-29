@@ -21,28 +21,23 @@
             background-image: url('/hoennbackground.png');
             background-repeat: no-repeat;
         }
+        img{
+            margin-left: 10%;
+       
+            width:80%;
+        }
     </style>
-    <title>Pokemon Training Tool</title>
+    <title>Document</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="banner">
-        <a th:href="@{/}" style="text-decoration:none">
-            <h1 class="bannertext">Pokemon Training Tool</h1>
-        </a>
-    </div>
     <div class="w3-container w3-content w3-padding-64 w3-light-grey shadow-container ">
-        <p>
-            This is a tool meant to help players understand the game better and 
-            to give them a clearer view of their team composition to assist them in 
-            developing strategies. You can also test your knowledge with the mini game below. Have fun!
-        </p>
+        <img src="https://static.wikia.nocookie.net/errors/images/d/d3/Missingno.jpg" alt="error">
+        <p>Oops! A wild error appeared!</p>
+      
+            <a th:href="@{/}" style="text-decoration: none; margin-left:45%;" class="button w3-panel">Back to home</a>
 
-       <div style="margin-left:25%; width:50%;">
-        <a th:href="@{/pokemon/teamsize}" class="button button-placement">Pokemon Team Builder</a>
-        <a th:href="@{/game/start}" class="button button-placement">Who's that Pokemon?</a>
-        </div>
 
-    
     </div>
+    
 </body>
 </html>

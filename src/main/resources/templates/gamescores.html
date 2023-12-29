@@ -12,15 +12,19 @@
         border: 1px solid black;
         border-collapse: collapse;
         } 
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>High Scores</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
     <div class="w3-container w3-content" style="margin-top: 10px">
@@ -52,9 +56,9 @@
                 </div>
             </div>
             <div style="width:50%; margin:auto">
-                <div class="button w3-panel">
-                    <a th:href="@{/game/start}" style="text-decoration: none;">Play the game</a>
-                </div>
+            
+                    <a th:href="@{/game/start}" style="text-decoration: none;" class="button w3-panel">Play the game</a>
+    
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,18 +16,19 @@
         /* div{
             border: 1px solid black;
         } */
+        body {
+            background-image: url('/hoennbackground.png');
+            background-repeat: no-repeat;
+        }
     </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Initialise Your Team</title>
 </head>
 <body class="w3-pale-blue">
-    <div class="bannertext">
+    <div class="banner">
         <a th:href="@{/}" style="text-decoration:none">
-            <h1 >Pokemon Training Tool</h1>
+            <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
-    <div class="flex-container"></div>
         <div class="w3-card w3-light-grey w3-container w3-content w3-padding-64">
             <h2 class="w3-wide w3-center">Pokemon Team Builder</h2>
             <div class="init-form">
@@ -50,14 +52,10 @@
                 </div>
                 </div>
                 <div class="form-child-custom">
-                    <div class="button button-placement">
-                        <a th:href="@{/pokemon/allteams}">View all teams</a>
-                    </div>
+                    <a th:href="@{/pokemon/allteams}" class="button button-placement">View all teams</a>
                 </div>
                 <div class="form-child-custom">
-                    <div class="button button-placement">
-                        <a th:href="@{/pokemon/apiguide}">How to use REST API</a>
-                    </div>
+                    <a th:href="@{/pokemon/apiguide}" class="button button-placement">How to use REST API</a>
                 </div>
             </div>
             <br>
