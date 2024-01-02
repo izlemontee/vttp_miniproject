@@ -272,15 +272,13 @@ public class GameController {
 
     @GetMapping(path="/highscore")
     public String showHighScore(Model model){
-
-        List<Score> scoresList = gameSvc.getScores();
         Map<String,List<Score>> scoresMap = gameSvc.getAllScores();
         model.addAttribute("easy", scoresMap.get("easy"));
         model.addAttribute("medium", scoresMap.get("medium"));
         model.addAttribute("hard", scoresMap.get("hard"));
         model.addAttribute("master", scoresMap.get("master"));
         model.addAttribute("arceus", scoresMap.get("arceus"));
-        model.addAttribute("scores",scoresList);
+
         return "gamescores";
 
     }

@@ -269,7 +269,7 @@ public class GameService {
                 String scoreString = o.toString();
                 String[] scoreSplit = scoreString.split(",");
                 Integer scoreInt = Integer.parseInt(scoreSplit[1]);
-                String difficultyString = scoreSplit[2];
+
                 Integer difficultyInt = 0;
                 switch(difficulty){
                     case "easy":
@@ -310,58 +310,6 @@ public class GameService {
             }
 
         }
-        return scoresFinal;
-    }
-    
-    public List<Score> getScores(){
-        Long size = pokemonRepo.getSizeOfScores();
-        List<Object> scoresRaw = pokemonRepo.getScores(size);
-        List<String[]> scoresArrayList = new ArrayList<String[]>();
-        List<Score> scoresFinal = new ArrayList<Score>();
-        for(Object o:scoresRaw){
-            String scoreString = o.toString();
-            String[] scoreSplit = scoreString.split(",");
-            Integer scoreInt = Integer.parseInt(scoreSplit[1]);
-            String difficulty = scoreSplit[2];
-            Integer difficultyInt = 0;
-            switch(difficulty){
-                case "easy":
-                difficultyInt = 1;
-                break;
-
-                case "medium":
-                difficultyInt = 2;
-                break;
-
-                case "hard":
-                difficultyInt = 3;
-                break;
-
-                case "master":
-                difficultyInt = 4;
-                break;
-
-                case "arceus":
-                difficultyInt = 5;
-                break;
-            }
-            Score score = new Score(scoreSplit[0], scoreInt, difficulty, difficultyInt);
-            scoresFinal.add(score);
-        }
-        // for(Score s: scoresFinal){
-        //     System.out.println(s.getScore());
-        // }
-
-        Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getDifficultyInt());
-        comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getScore()));
-        // Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
-        // comparator = comparator.thenComparing(Comparator.comparing(highscore -> highscore.getDifficultyInt()));
-   
-        //comparator = comparator.thenComparing(comparator.reversed());
-        scoresFinal = scoresFinal.stream()
-                                .sorted(comparator.reversed())
-                                .collect(Collectors.toList());
-
         return scoresFinal;
     }
 
