@@ -37,9 +37,17 @@
             developing strategies. You can also test your knowledge with the mini game below. Have fun!
         </p>
 
-       <div style="margin-left:25%; width:50%;">
-        <a th:href="@{/pokemon/teamsize}" class="button button-placement">Pokemon Team Builder</a>
-        <a th:href="@{/game/start}" class="button button-placement">Who's that Pokemon?</a>
+       <div style="margin-left:20%; width:60%; display:flex">
+            <a th:href="@{/pokemon/teamsize}" class="button button-placement button-index" 
+            style="display:inline-block; margin-right:20px;">
+                <p>Pokemon Team Builder</p>
+                <img src="/pokedex_vector.png" style="height:100px;" alt="">
+            </a>
+        
+            <a th:href="@{/game/start}" class="button button-placement button-index" style="display:inline-block; margin-left:20px">
+                <p>Who's that Pokemon?</p>
+                <img src="/unown.png" style="height:100px" alt="">
+            </a>
         </div>
 
     

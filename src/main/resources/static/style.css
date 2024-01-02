@@ -296,6 +296,14 @@
     width:50%;
     margin:auto;
 }
+
+.button-index{
+
+}
+
+.button-index:hover{
+    transform:scale(1.2);
+}
 /* @media (max-width: 767px) {
     button {
       display: block;

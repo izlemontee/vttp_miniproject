@@ -36,12 +36,12 @@
                 <form method="POST" data-th-action="@{/pokemon/teambuilderinit}" data-th-object="${TeamInitialise}">
                     <label for="numberOfPokemon" class="formintrotext">Enter Number Of Pokemon:</label>
                     <div class="teamsize">
-                    <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}">
+                    <input type="number" name="numberOfPokemon" data-th-field="*{numberOfPokemon}" style="margin-left: 30px;">
                     </div>
                     <div data-th-if="${#fields.hasErrors('numberOfPokemon')}"  data-th-errors="*{numberOfPokemon}" style="color:red; margin-left:10px">
                     </div>
                     <div class="form-button teamsize">
-                        <button type="submit">GO</button>
+                        <button type="submit" style="margin-left: 90px;">GO</button>
                     </div>
                 </form>
                 <div class="flexchild-right">
@@ -49,13 +49,18 @@
                         Enter the number of Pokemon you want in your team here (max 6). You will then be required
                         to enter the names of the pokemon in your team in order for the app to make its calculations. 
                     </p>
+                    <p>
+                        Alternatively, you can also generate a team by directly calling the REST API, refer to the guide below.
+                    </p>
                 </div>
                 </div>
-                <div class="form-child-custom">
-                    <a th:href="@{/pokemon/allteams}" class="button button-placement">View all teams</a>
-                </div>
-                <div class="form-child-custom">
-                    <a th:href="@{/pokemon/apiguide}" class="button button-placement">How to use REST API</a>
+                <div style="display: flex;">
+             
+                        <a th:href="@{/pokemon/allteams}" class="button button-placement">View all teams</a>
+      
+                  
+                        <a th:href="@{/pokemon/apiguide}" class="button button-placement">How to use REST API</a>
+              
                 </div>
             </div>
             <br>

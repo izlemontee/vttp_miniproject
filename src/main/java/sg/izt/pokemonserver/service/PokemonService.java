@@ -85,7 +85,7 @@ public class PokemonService {
         
         // get the sprite url
         JsonObject spriteObj = jsonObject.getJsonObject("sprites");
-        String spriteUrl = spriteObj.getString("front_default");
+        String spriteUrl = spriteObj.getString("front_default","https://p.kindpng.com/picc/s/20-201741_pokeball-8-bit-gif-hd-png-download.png");
         
         // get the types
         JsonArray typeData = jsonObject.getJsonArray("types");
