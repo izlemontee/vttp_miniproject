@@ -1,6 +1,7 @@
 package sg.izt.pokemonserver.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import sg.izt.pokemonserver.Utils;
 import sg.izt.pokemonserver.model.Pokemon;
+import sg.izt.pokemonserver.model.PokemonInBuilder;
 import sg.izt.pokemonserver.model.PokemonInForm;
 import sg.izt.pokemonserver.model.PokemonType;
 import sg.izt.pokemonserver.model.TeamInitialise;
@@ -70,7 +72,7 @@ public class PokemonController {
             session.setAttribute(Utils.COUNTER, 0);
 
             // at this point it should be an empty list, size 0
-            List<String> pokemonList = Utils.getPokemonListBuilder(session);
+            List<Pokemon> pokemonList = Utils.getPokemonListBuilder(session);
             // how many pokemon left to enter
             Integer remainingSize = teamSize - pokemonList.size();
             model.addAttribute("remainingSize", remainingSize);
@@ -87,7 +89,7 @@ public class PokemonController {
     //public String getTeamInfo(@ModelAttribute("blanklist") List<Pokemon> list){
     public String getTeamInfo(@Valid @ModelAttribute("pokemonInForm") PokemonInForm form, BindingResult result,
     Model model,HttpSession session){
-        List<String> pokemonList = Utils.getPokemonListBuilder(session);
+        List<Pokemon> pokemonList = Utils.getPokemonListBuilder(session);
 
         if(result.hasErrors()){
             Integer remainingSize = (Integer)session.getAttribute(Utils.TEAM_SIZE) - pokemonList.size();
@@ -100,7 +102,8 @@ public class PokemonController {
             String fullName = form.getFullName().toLowerCase();
             try{
             pokemonSvc.checkPokemonExists(fullName);
-            pokemonList.add(fullName);
+            Pokemon pokemonToAdd = pokemonSvc.getPokemonInfo(fullName);
+            pokemonList.add(pokemonToAdd);
             Utils.setPokemonListBuilder(session, pokemonList);
             Integer remainingSize = (Integer)session.getAttribute(Utils.TEAM_SIZE) - pokemonList.size();
             model.addAttribute("remainingSize", remainingSize);
@@ -147,7 +150,15 @@ public class PokemonController {
             session.setAttribute(Utils.COUNTER, 0);
 
             // at this point it should be an empty list, size 0
-            List<String> pokemonList = Utils.getPokemonListBuilder(session);
+            List<Pokemon> pokemonList = Utils.getPokemonListBuilder(session);
+            Iterator<Pokemon> iterator = pokemonList.iterator();
+            while(iterator.hasNext()){
+                Pokemon p = iterator.next();
+                if(p.getFullName().equals(pokemonRemove)){
+                    iterator.remove();
+                    break;
+                }
+            }
             pokemonList.remove(pokemonRemove);
             // how many pokemon left to enter
             Integer remainingSize = teamSize - pokemonList.size();
@@ -176,15 +187,19 @@ public class PokemonController {
     // displays all the pokemon in the team
     @PostMapping(path = "/displayall")
     public String displayTeam(@RequestBody MultiValueMap<String,Object> mvm, Model model, HttpSession session){
-        
-        String teamList = mvm.getFirst("pokemondisplay").toString();
-        String[] teamListArray = pokemonSvc.processTeamString(teamList);
-        List<Pokemon> pokemonList = new ArrayList<>();
+        List<Pokemon> pokemonList = Utils.getPokemonListBuilder(session);
+        // for(Pokemon p:testList){
+        //     System.out.println(p.getFullName());
+        // }
+        // String teamList = mvm.getFirst("pokemondisplay").toString();
+        // String[] teamListArray = pokemonSvc.processTeamString(teamList);
 
-        for(String s:teamListArray){
-            Pokemon pokemon = pokemonSvc.getPokemonInfo(s);
-            pokemonList.add(pokemon);
-        }
+        //List<Pokemon> pokemonList = new ArrayList<>();
+
+        // for(String s:teamListArray){
+        //     Pokemon pokemon = pokemonSvc.getPokemonInfo(s);
+        //     pokemonList.add(pokemon);
+        // }
         List<Float> typeList = pokemonSvc.calculateTeam(pokemonList);
         // pokemonList refers to the list list of pokemon objects
         // typeList is the final team calculation, also a list

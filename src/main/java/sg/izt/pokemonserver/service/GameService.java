@@ -145,7 +145,7 @@ public class GameService {
 
     public void saveHighScore(String name, Integer score, String difficulty){
         String playerInfo = name+ "," + score.toString() + "," + difficulty;
-        pokemonRepo.saveHighScore(playerInfo);
+        pokemonRepo.saveHighScore(playerInfo,difficulty);
 
     }
     

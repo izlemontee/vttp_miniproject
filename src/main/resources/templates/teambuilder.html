@@ -15,7 +15,7 @@
         }
         body {
             background-image: url('/hoennbackground.png');
-            background-repeat: no-repeat;
+            background-repeat: repeat-y;
         }
     </style>
     <title>Team Builder</title>
@@ -35,7 +35,7 @@
             "tapu-koko"
         </div>
         <br>
-        <div class="teambuilderform" style="margin-left:25%;width:50%;">
+        <div class="teambuilderform" style="margin-left:20%;width:60%;">
             <div class="w3-white forty">
                 <div th:if="${pokemonAPIerror}" style="color:red; margin-left:10px">
                     The Pokemon you entered does not exist. Try again.
@@ -64,13 +64,17 @@
                             <tr>
                                 <th class="formtext">Pokemon</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="pokemonName:${pokemonListBuilder}">
-                                <td th:text="${pokemonName}"></td>
+                                <td th:text="${pokemonName.fullName}"></td>
+                                <td>
+                                    <img th:src="@{${pokemonName.spriteUrl}}" alt="" width="96" height="96">
+                                </td>
                                 <td><form method="POST" th:action="@{/pokemon/remove}">
-                                    <button type="submit" name="pokemonRemove" th:value="${pokemonName}">Remove</button>
+                                    <button type="submit" name="pokemonRemove" th:value="${pokemonName.fullName}">Remove</button>
                                 </form></td>
                             </tr>
                         </tbody>

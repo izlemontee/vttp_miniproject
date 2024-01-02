@@ -37,9 +37,15 @@ public class PokemonRepo {
         return template.opsForHash().get("teamcalculator",id).toString();
     }
 
-    public void saveHighScore(String playerInfo){
+    public void saveHighScore(String playerInfo, String difficulty){
         ListOperations<String,Object> LO = template.opsForList();
         LO.leftPush("game",playerInfo);
+    }
+
+    public void getScoresPerDifficulty(String difficulty){
+        ListOperations<String,Object> LO = template.opsForList();
+        
+
     }
 
     public Long getSizeOfScores(){
