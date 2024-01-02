@@ -143,10 +143,174 @@ public class GameService {
         return pokemonList;
     }
 
-    public void saveHighScore(String name, Integer score, String difficulty){
-        String playerInfo = name+ "," + score.toString() + "," + difficulty;
-        pokemonRepo.saveHighScore(playerInfo,difficulty);
+    public void saveHighScore(String name, Integer scoreInt, String difficulty){
+        String playerInfo = name+ "," + scoreInt.toString() + "," + difficulty;
+        Integer difficultyInt = 0;
+        switch(difficulty){
+                    case "easy":
+                    difficultyInt = 1;
+                    break;
 
+                    case "medium":
+                    difficultyInt = 2;
+                    break;
+
+                    case "hard":
+                    difficultyInt = 3;
+                    break;
+
+                    case "master":
+                    difficultyInt = 4;
+                    break;
+
+                    case "arceus":
+                    difficultyInt = 5;
+                    break;
+                }
+        Score score = new Score(name, scoreInt, difficulty, difficultyInt);
+        List<Score> sortedScores = sortScoresPerDifficulty(difficulty,score);
+        pokemonRepo.deleteList(difficulty);
+        for(Score s: sortedScores){
+            String scoreInfo = s.getName()+ "," + s.getScore().toString() + "," + difficulty;
+            pokemonRepo.saveHighScore(scoreInfo,difficulty);
+        }
+    }
+
+    public Map<String,List<Score>> getAllScores(){
+        String easy = "easy";
+        String medium = "medium";
+        String hard = "hard";
+        String master = "master";
+        String arceus = "arceus";
+        
+        List<Score> easyScores = retrieveScoresByDifficulty(easy);
+        List<Score> mediumScores = retrieveScoresByDifficulty(medium);
+        List<Score> hardScores = retrieveScoresByDifficulty(hard);
+        List<Score> masterScores = retrieveScoresByDifficulty(master);
+        List<Score> arceusScores = retrieveScoresByDifficulty(arceus);
+
+        Map<String,List<Score>> scoresList = new HashMap<>();
+        scoresList.put(easy,easyScores);
+        scoresList.put(medium,mediumScores);
+        scoresList.put(hard,hardScores);
+        scoresList.put(master,masterScores);
+        scoresList.put(arceus,arceusScores);
+
+        return scoresList;
+    }
+
+    public List<Score> retrieveScoresByDifficulty(String difficulty){
+        List<Object> scoresRaw = pokemonRepo.getScoresRaw(difficulty);
+        List<Score> scoresPlaceholder = new ArrayList<Score>();
+        List<Score> scoresFinal = new ArrayList<Score>();
+        Integer maxIndex = 10;
+        if(scoresRaw == null){
+        }
+        else{
+            for(Object o:scoresRaw){
+                //scores.add(o.toString());
+                String scoreString = o.toString();
+                String[] scoreSplit = scoreString.split(",");
+                Integer scoreInt = Integer.parseInt(scoreSplit[1]);
+                String difficultyString = scoreSplit[2];
+                Integer difficultyInt = 0;
+                switch(difficulty){
+                    case "easy":
+                    difficultyInt = 1;
+                    break;
+
+                    case "medium":
+                    difficultyInt = 2;
+                    break;
+
+                    case "hard":
+                    difficultyInt = 3;
+                    break;
+
+                    case "master":
+                    difficultyInt = 4;
+                    break;
+
+                    case "arceus":
+                    difficultyInt = 5;
+                    break;
+                }
+                Score score = new Score(scoreSplit[0], scoreInt, difficulty, difficultyInt);
+                scoresPlaceholder.add(score);
+                }
+            Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
+            scoresPlaceholder = scoresPlaceholder.stream()
+                        .sorted(comparator.reversed())
+                        .collect(Collectors.toList());
+            if(scoresPlaceholder.size()<maxIndex){
+                return scoresPlaceholder;
+            }
+            else{
+                for(int i=0; i<maxIndex; i++){
+                    scoresFinal.add(scoresPlaceholder.get(i));
+                }
+            }
+
+        }
+        return scoresFinal;
+
+    }
+
+    public List<Score> sortScoresPerDifficulty(String difficulty, Score scoreToSave){
+        List<Object> scoresRaw = pokemonRepo.getScoresRaw(difficulty);
+        List<Score> scoresPlaceholder = new ArrayList<Score>();
+        List<Score> scoresFinal = new ArrayList<Score>();
+        Integer maxIndex = 10;
+        if(scoresRaw == null){
+        }
+        else{
+            for(Object o:scoresRaw){
+                //scores.add(o.toString());
+                String scoreString = o.toString();
+                String[] scoreSplit = scoreString.split(",");
+                Integer scoreInt = Integer.parseInt(scoreSplit[1]);
+                String difficultyString = scoreSplit[2];
+                Integer difficultyInt = 0;
+                switch(difficulty){
+                    case "easy":
+                    difficultyInt = 1;
+                    break;
+
+                    case "medium":
+                    difficultyInt = 2;
+                    break;
+
+                    case "hard":
+                    difficultyInt = 3;
+                    break;
+
+                    case "master":
+                    difficultyInt = 4;
+                    break;
+
+                    case "arceus":
+                    difficultyInt = 5;
+                    break;
+                }
+                Score score = new Score(scoreSplit[0], scoreInt, difficulty, difficultyInt);
+                scoresPlaceholder.add(score);
+                }
+            scoresPlaceholder.add(scoreToSave);
+            Comparator<Score> comparator = Comparator.comparing(highscore -> highscore.getScore());
+            scoresPlaceholder = scoresPlaceholder.stream()
+                        .sorted(comparator.reversed())
+                        .collect(Collectors.toList());
+            if(scoresPlaceholder.size()<maxIndex){
+                return scoresPlaceholder;
+            }
+            else{
+                for(int i=0; i<maxIndex; i++){
+                    scoresFinal.add(scoresPlaceholder.get(i));
+                }
+            }
+
+        }
+        return scoresFinal;
     }
     
     public List<Score> getScores(){

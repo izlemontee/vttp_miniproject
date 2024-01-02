@@ -8,10 +8,10 @@
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         /* div {text-align:center} */
-        table, th,td {
+        /* table, th,td {
         border: 1px solid black;
         border-collapse: collapse;
-        } 
+        }  */
         body {
             background-image: url('/hoennbackground.png');
             background-repeat: repeat-y;
@@ -27,13 +27,159 @@
             <h1 class="bannertext">Pokemon Training Tool</h1>
         </a>
     </div>
-    <div class="w3-container w3-content" style="margin-top: 10px">
-        <div class="w3-ul w3-border w3-light-grey w3-text-grey shadow-container">
+    <div class="w3-container w3-content" style="margin-top: 10px; margin-bottom: 20px;">
+        <div class="w3-ul w3-border w3-light-grey w3-text-grey shadow-container" style="margin-bottom: 20px;">
             <div>
                 <h2 style="margin:auto; width:50%; text-align:center">High Scores</h2>
             </div>
+
             <br>
-            <div>
+
+            <div style="margin-left:25%; width:50%; text-align: center;">
+                <a th:href="@{/game/start}" style="text-decoration: none;" class="button w3-panel">Play the game</a>
+            </div>
+            <div style="display: flex; width:100%;" >
+                <table style="border: none; width:100%;">
+                    <thead style="border: none;">
+                        <tr style="border: none;">
+                            <th>EASY</th>
+                            <th>MEDIUM</th>
+                            <th>HARD</th>
+                            <th>MASTER</th>
+                            <th>ARCEUS</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border: none;">
+                        <tr style="border: none;">
+                            <td>
+                <div class="scoreformat">
+                    <div th:if="${easy.size() == 0}">
+                        <p>
+                            There are no scores yet.
+                        </p>
+                    </div>
+                    <div th:unless="${easy.size() == 0}">
+                        <table class="scoretable innertable">
+                            <thead class="w3-padding">
+                                <tr>
+                                    <th class="w3-padding typedisplay innertable">Name</th>
+                                    <th class="w3-padding typedisplay innertable">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="easyscore:${easy}">
+                                    <td class="w3-padding typedisplay innertable" th:text="${easyscore.name}"></td>
+                                    <td class="w3-padding typedisplay innertable" th:text="${easyscore.score}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+                <td>
+                <div class="scoreformat">
+                    <div th:if="${medium.size() == 0}">
+                        <p>
+                            There are no scores yet.
+                        </p>
+                    </div>
+                    <div th:unless="${medium.size() == 0}">
+                        <table class="scoretable innertable">
+                            <thead class="w3-padding innertable">
+                                <tr>
+                                    <th class="w3-padding typedisplay innertable">Name</th>
+                                    <th class="w3-padding typedisplay innertable">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="mediumscore:${medium}">
+                                    <td class="w3-padding typedisplay innertable" th:text="${mediumscore.name}"></td>
+                                    <td class="w3-padding typedisplay innertable" th:text="${mediumscore.score}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+            <td>
+
+                <div class="scoreformat">
+                    <div th:if="${hard.size() == 0}">
+                        <p>
+                            There are no scores yet.
+                        </p>
+                    </div>
+                    <div th:unless="${hard.size() == 0}">
+                        <table class="scoretable innertable">
+                            <thead class="w3-padding">
+                                <tr class="scoretable innertable">
+                                    <th class="w3-padding typedisplay innertable">Name</th>
+                                    <th class="w3-padding typedisplay innertable">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="hardscore:${hard}">
+                                    <td class="w3-padding typedisplay innertable" th:text="${hardscore.name}"></td>
+                                    <td class="w3-padding typedisplay innertable" th:text="${hardscore.score}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+                <td>
+                <div class="scoreformat">
+                    <div th:if="${master.size() == 0}">
+                        <p>
+                            There are no scores yet.
+                        </p>
+                    </div>
+                    <div th:unless="${master.size() == 0}">
+                        <table class="scoretable innertable">
+                            <thead class="w3-padding innertable">
+                                <tr>
+                                    <th class="w3-padding typedisplay innertable">Name</th>
+                                    <th class="w3-padding typedisplay innertable" >Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="masterscore:${master}">
+                                    <td class="w3-padding typedisplay innertable" th:text="${masterscore.name}"></td>
+                                    <td class="w3-padding typedisplay innertable" th:text="${masterscore.score}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+                <td>
+                <div class="scoreformat">
+                    <div th:if="${arceus.size()==0}">
+                        <p>There are no scores.</p>
+                    </div>
+                    <div th:unless="${arceus.size()==0}">
+                        <table class="scoretable innertable">
+                            <thead class="w3-padding innertable">
+                                <tr>
+                                    <th class="w3-padding typedisplay innertable" >Name</th>
+                                    <th class="w3-padding typedisplay innertable">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="arceusscore:${arceus}">
+                                    <td class="w3-padding typedisplay innertable" th:text="${arceusscore.name}"></td>
+                                    <td class="w3-padding typedisplay innertable" th:text="${arceusscore.score}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+                </tbody>
+            </tr>
+            </table>
+            </div>
+            <!-- <div>
                 <div th:if="${scores.size() == 0}" style="text-align: center;">There are no scores.</div>
                 <div th:unless="${scores.size() == 0}">
                     <table class="scoretable" style="font-size: 18px; text-align:center">
@@ -54,12 +200,8 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div style="width:50%; margin:auto">
-            
-                    <a th:href="@{/game/start}" style="text-decoration: none;" class="button w3-panel">Play the game</a>
-    
-            </div>
+            </div> -->
+
         </div>
     </div>
     

@@ -1,5 +1,6 @@
 package sg.izt.pokemonserver.repo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,12 +40,19 @@ public class PokemonRepo {
 
     public void saveHighScore(String playerInfo, String difficulty){
         ListOperations<String,Object> LO = template.opsForList();
-        LO.leftPush("game",playerInfo);
+        LO.leftPush(difficulty,playerInfo);
     }
 
-    public void getScoresPerDifficulty(String difficulty){
+    public List<Object> getScoresRaw(String difficulty){
         ListOperations<String,Object> LO = template.opsForList();
-        
+        List<Object> scoresRaw = LO.range(difficulty,0,LO.size(difficulty));
+        return scoresRaw;
+    }
+
+    public void deleteList(String difficulty){
+        if(template.hasKey(difficulty)){
+            template.delete(difficulty);
+        }
 
     }
 

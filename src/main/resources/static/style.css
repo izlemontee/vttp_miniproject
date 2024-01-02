@@ -134,6 +134,17 @@
     font-size: 12px;
 }
 
+.scoreformat{
+
+    margin:auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: 0;
+    font-size: 14px;
+
+}
+
 .fullteam{
     margin:auto;
     width:95%;
@@ -303,6 +314,11 @@
 
 .button-index:hover{
     transform:scale(1.2);
+}
+
+.innertable{
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 /* @media (max-width: 767px) {
     button {
